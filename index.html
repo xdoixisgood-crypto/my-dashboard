@@ -118,15 +118,6 @@ const ACTUAL_EXPENSES = [
   {month:'6月',dining:10595,transport:5271,shopping:9596,entertainment:34758,cash:8015,housing:15869,insurance:1160,other:469},
 ];
 
-// 0050 股息
-const DIVIDENDS = [
-  {date:'2025-07-16',perShare:3.80,total:110200},
-  {date:'2025-01-17',perShare:3.60,total:104400},
-  {date:'2024-07-17',perShare:3.40,total:98600},
-  {date:'2024-01-17',perShare:3.50,total:101500},
-  {date:'2023-07-18',perShare:3.20,total:92800},
-];
-
 let DATA={prices:{},exchangeRate:31.67,netWorthHistory:[],lastUpdated:''};
 
 // ==== 載入 ====
@@ -150,6 +141,19 @@ function render(){
   const totalAssets=stockValTWD+reVal+CASH;
   let totalDebts=0; LOANS.forEach(l=>totalDebts+=l.amount);
   const netWorth=totalAssets-totalDebts;
+
+  // 退休計算
+  const age=35; const retireAge=60; const yearsToRetire=retireAge-age;
+  const targetRetirement=30000000; // 3,000萬 (月花10萬×12/0.04)
+  const retirementAssets=stockValTWD; // 現有持股當退休本金
+  const retirePct=Math.min(100,Math.round(retirementAssets/targetRetirement*100));
+  const projectedAt60=Math.round(retirementAssets*Math.pow(1.06,yearsToRetire)); // 6%複利
+  const gap=Math.max(0,targetRetirement-projectedAt60);
+  const monthlyGap=gap>0?Math.round(gap/(((Math.pow(1.005,yearsToRetire*12)-1)/0.005))):0;
+  // 房貸清償後釋出金流（新竹+台中房貸月付合計）
+  const mortgageMonthly=9793+3945+1491+13250;
+  const lastLoanYear=2031; // 信貸最後清償年份
+  const monthlyFreeAfterLoans=mortgageMonthly+22002; // 房貸+信貸
 
   const now=new Date();
   const graceLeft=LOANS[1].graceMonths ? LOANS[1].graceMonths-LOANS[1].elapsed : 0;
@@ -183,14 +187,9 @@ function render(){
   <div class="canvas-wrap"><canvas id="chartNW"></canvas></div>
 </div>
 
-<!-- 資產分配 + 持股 -->
-<div class="row">
-  <div class="col card">
-    <h2>🍩 資產分配</h2>
-    <div class="canvas-wrap"><canvas id="chartAsset"></canvas></div>
-  </div>
-  <div class="col card">
-    <h2>📈 持股概覽</h2>
+<!-- 持股 -->
+<div class="card">
+  <h2>📈 持股概覽</h2>
     ${STOCKS.map(s=>{
       const priceTWD=toTWD(s);
       const cTWD=costTWD(s);
@@ -207,7 +206,6 @@ function render(){
         <div class="ln-d">市值 ${fmtW(val)}｜${fmtPct(plPct)}</div>
       </div>`;
     }).join('')}
-  </div>
 </div>
 
 <!-- 房產 -->
@@ -263,20 +261,41 @@ function render(){
     <div id="actExpSummary" style="margin-top:8px;font-size:11px;color:#8b949e;text-align:center"></div>
 </div>
 
-<!-- 0050 股息 -->
+<!-- 退休進度 -->
 <div class="card">
-  <h2>💵 0050 股息紀錄（29,000股）</h2>
-  <table class="tbl">
-    <tr><th>除息日</th><th>每股</th><th>總額</th><th>年化殖利率</th></tr>
-    ${DIVIDENDS.map(d=>`<tr>
-      <td>${d.date}</td>
-      <td>$${d.perShare}</td>
-      <td class="positive">$${fmtM(d.total)}</td>
-      <td class="dim">${(d.perShare/STOCKS[0].costPrice*100).toFixed(1)}%</td>
-    </tr>`).join('')}
-    <tr class="total"><td>累計</td><td>$17.50</td><td class="positive">$${fmtM(DIVIDENDS.reduce((a,d)=>a+d.total,0))}</td><td></td></tr>
-  </table>
-  <div style="font-size:10px;color:#8b949e;margin-top:4px">* 0050 年配息約 2 次，成本 $53</div>
+  <h2>🎯 退休進度（60 歲退休・月花 10 萬）</h2>
+  <div class="grid2">
+    <div>
+      <div class="metric"><div class="val" style="color:#58a6ff">$${fmtW(targetRetirement)}</div><div class="lbl">退休目標（4% 法則）</div></div>
+    </div>
+    <div>
+      <div class="metric"><div class="val positive">$${fmtW(retirementAssets)}</div><div class="lbl">已備退休金（持股現值）</div></div>
+    </div>
+  </div>
+  <div class="bar-wrap" style="height:16px;margin-top:14px;border-radius:8px">
+    <div class="bar-fill bb" style="width:${retirePct}%;border-radius:8px"></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin-top:6px">
+    <span>達成 ${retirePct}%</span>
+    <span>還差 $${fmtW(targetRetirement-retirementAssets)}</span>
+  </div>
+  <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center">
+    <div>
+      <div style="font-size:20px;font-weight:700;color:#3fb950">$${fmtW(projectedAt60)}</div>
+      <div style="font-size:10px;color:#8b949e">持股複利預估（6%/年）
+        <br><span class="dim">${yearsToRetire} 年後</span></div>
+    </div>
+    <div>
+      <div style="font-size:20px;font-weight:700;color:#d29922">$${fmtM(monthlyGap)}<span style="font-size:12px">/月</span></div>
+      <div style="font-size:10px;color:#8b949e">缺口需月存
+        <br><span class="dim">（達標 $3,000 萬）</span></div>
+    </div>
+    <div>
+      <div style="font-size:20px;font-weight:700;color:#58a6ff">$${fmtM(monthlyFreeAfterLoans)}<span style="font-size:12px">/月</span></div>
+      <div style="font-size:10px;color:#8b949e">房貸清償後釋出
+        <br><span class="dim">${lastLoanYear} 年起</span></div>
+    </div>
+  </div>
 </div>
 
 <!-- 提醒 -->
@@ -334,19 +353,6 @@ function drawCharts(netWorth,stockValTWD,reVal,totalAssets){
       }
     });
   }
-
-  // 資產分配
-  const twVal=STOCKS.filter(s=>s.currency=='TWD').reduce((a,s)=>a+s.shares*toTWD(s),0);
-  const usVal=STOCKS.filter(s=>s.currency=='USD').reduce((a,s)=>a+s.shares*toTWD(s),0);
-  new Chart(document.getElementById('chartAsset'),{
-    type:'doughnut',
-    data:{
-      labels:['台股','美股','新竹房產','台中房產','現金'],
-      datasets:[{data:[twVal,usVal,REAL_ESTATE.hsinchu,REAL_ESTATE.taichung,CASH],
-        backgroundColor:['#58a6ff','#3fb950','#d29922','#f85149','#8b949e']}]
-    },
-    options:{plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',padding:12,font:{size:11}}}}}
-  });
 
   // 固定支出
   new Chart(document.getElementById('chartFixExp'),{

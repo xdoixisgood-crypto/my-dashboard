@@ -167,9 +167,10 @@ function render(){
   const yearsToFire=firePct>0?Math.round((annualExpense-passiveIncome)/(passiveIncome||1)*10)/10:'--';
 
   // 現金流
-  const monthlyExpense2=avgMonthlyExp;
-  const monthlySaving=estIncome-monthlyExpense2; // 收入-支出=淨結餘
-  const savingRate=estIncome>0?Math.round(monthlySaving/estIncome*100):0;
+  const loanTotalMonthly=LOANS.reduce((a,l)=>a+(l.monthly||0),0);
+  const consumption=avgMonthlyExp-loanTotalMonthly; // 支出減還貸=純消費
+  const netAfterAll=estIncome-avgMonthlyExp; // 收入-總支出=淨結餘
+  const savingRate=estIncome>0?Math.round((estIncome-consumption)/estIncome*100):0;
 
   const now=new Date();
   const graceLeft=LOANS[1].graceMonths ? LOANS[1].graceMonths-LOANS[1].elapsed : 0;
@@ -343,13 +344,15 @@ function render(){
     <!-- 現金流 -->
     <div class="card" style="margin-top:0">
       <h2>💵 每月現金流</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-        <div class="metric"><div class="val" style="color:#58a6ff">$${fmtM(estIncome)}</div><div class="lbl">月收入（麻布實薪均）</div></div>
-        <div class="metric"><div class="val" style="color:#f85149">$${fmtM(monthlyExpense2)}</div><div class="lbl">月總支出</div></div>
-        <div class="metric"><div class="val" style="color:${monthlySaving>=0?'#3fb950':'#f85149'}">${monthlySaving>=0?'+':''}$${fmtM(monthlySaving)}</div><div class="lbl">月淨結餘</div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="metric"><div class="val" style="color:#58a6ff">$${fmtM(estIncome)}</div><div class="lbl">月收入（實薪）</div></div>
+        <div class="metric"><div class="val" style="color:#f85149">$${fmtM(consumption)}</div><div class="lbl">消費支出</div></div>
+        <div class="metric"><div class="val" style="color:#d29922">$${fmtM(loanTotalMonthly)}</div><div class="lbl">還貸（本金+息）</div></div>
+        <div class="metric"><div class="val" style="color:${netAfterAll>=0?'#3fb950':'#f85149'}">${netAfterAll>=0?'+':''}$${fmtM(netAfterAll)}</div><div class="lbl">淨結餘</div></div>
       </div>
       <div style="margin-top:12px;font-size:11px;color:#8b949e;text-align:center">
-        儲蓄率 <strong style="color:${savingRate>=0?'#3fb950':'#f85149'}">${savingRate>=0?'+':''}${savingRate}%</strong>｜月支出 $${fmtM(monthlyExpense2)}（含固定+變動+貸款）
+        收入 $${fmtM(estIncome)} − 消費 $${fmtM(consumption)} − 還貸 $${fmtM(loanTotalMonthly)} = <strong style="color:${netAfterAll>=0?'#3fb950':'#f85149'}">${netAfterAll>=0?'+':''}$${fmtM(netAfterAll)}</strong>
+        <br><span class="dim">※ 還貸雖是現金流出但同時減少負債，淨值不變。股票漲幅另計。</span>
       </div>
     </div>
 

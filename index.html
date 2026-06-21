@@ -7,282 +7,389 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e1e4e8;min-height:100vh}
-.header{background:#161b22;border-bottom:1px solid #30363d;padding:20px 16px;position:sticky;top:0;z-index:10}
-.header h1{font-size:22px;font-weight:600;color:#58a6ff}
-.header .update{font-size:12px;color:#8b949e;margin-top:4px}
-.container{max-width:900px;margin:0 auto;padding:16px}
-.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin-bottom:16px}
-.card h2{font-size:16px;font-weight:600;margin-bottom:16px;color:#f0f6fc}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.metric{text-align:center}
-.metric .value{font-size:28px;font-weight:700;color:#f0f6fc}
-.metric .label{font-size:12px;color:#8b949e;margin-top:4px}
-.positive{color:#3fb950!important}
-.negative{color:#f85149!important}
-.warning{color:#d29922!important}
-.bar-wrap{background:#21262d;border-radius:6px;height:10px;overflow:hidden;margin-top:6px}
-.bar-fill{height:100%;border-radius:6px;transition:width .5s}
-.bar-green{background:#3fb950}
-.bar-blue{background:#58a6ff}
-.bar-yellow{background:#d29922}
-.bar-red{background:#f85149}
-.loan-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #21262d;font-size:14px}
-.loan-row:last-child{border-bottom:none}
-.loan-name{color:#f0f6fc;min-width:110px}
-.loan-amnt{color:#f0f6fc;font-weight:600;min-width:80px;text-align:right}
-.loan-detail{color:#8b949e;font-size:12px;min-width:140px;text-align:right}
-.alert{background:#1a1a2e;border-left:3px solid #d29922;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;font-size:14px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e1e4e8;min-height:100vh;padding-bottom:40px}
+.header{background:#161b22;border-bottom:1px solid #30363d;padding:16px;position:sticky;top:0;z-index:10}
+.header h1{font-size:20px;font-weight:600;color:#58a6ff}
+.header .sub{font-size:11px;color:#8b949e;margin-top:2px}
+.container{max-width:960px;margin:0 auto;padding:12px}
+.row{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.col{flex:1;min-width:0}
+.col-2{flex:2}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px;margin-bottom:12px}
+.card h2{font-size:15px;font-weight:600;margin-bottom:12px;color:#f0f6fc}
+.card h3{font-size:14px;color:#58a6ff;margin-bottom:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{text-align:center;padding:4px 0}
+.metric .val{font-size:26px;font-weight:700}
+.metric .lbl{font-size:11px;color:#8b949e;margin-top:2px}
+.positive{color:#3fb950}.negative{color:#f85149}.warn{color:#d29922}.dim{color:#8b949e}
+.bar-wrap{background:#21262d;border-radius:4px;height:8px;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;border-radius:4px}
+.bg{background:#3fb950}.bb{background:#58a6ff}.by{background:#d29922}.br{background:#f85149}.bgray{background:#484f58}
+.ln-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #21262d;font-size:13px}
+.ln-row:last-child{border-bottom:none}
+.ln-n{color:#f0f6fc;min-width:100px;font-size:13px}
+.ln-a{font-weight:600;min-width:80px;text-align:right;font-size:13px}
+.ln-d{color:#8b949e;font-size:11px;min-width:120px;text-align:right}
+.alert{background:#1a1a2e;border-left:3px solid #d29922;padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:8px;font-size:13px}
 .alert strong{color:#d29922}
-.alert-red{border-left-color:#f85149}
-.alert-red strong{color:#f85149}
-.estate-card{background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:16px}
-.estate-card h3{font-size:15px;color:#58a6ff;margin-bottom:12px}
-.estate-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:#c9d1d9}
+.alert-red{border-left-color:#f85149}.alert-red strong{color:#f85149}
+.estate-row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;color:#c9d1d9}
+.estate-row .nr{border-top:1px solid #30363d;margin-top:6px;padding-top:6px;font-weight:600}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th,.tbl td{padding:8px 6px;text-align:right;border-bottom:1px solid #21262d}
+.tbl th{color:#8b949e;font-weight:500;font-size:11px}
+.tbl td:first-child,.tbl th:first-child{text-align:left;color:#c9d1d9}
+.tbl .total{font-weight:700;border-top:1px solid #30363d}
+.tbl .total td{color:#f0f6fc}
 .canvas-wrap{position:relative;width:100%}
-.canvas-wrap canvas{width:100%!important;max-height:300px}
-.footer{text-align:center;padding:24px;color:#484f58;font-size:11px}
-@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+.canvas-wrap canvas{width:100%!important;max-height:320px}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:10px}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.badge-up{background:#1a3a1a;color:#3fb950}.badge-down{background:#3a1a1a;color:#f85149}
+.loading{text-align:center;padding:40px;color:#8b949e;font-size:14px}
+@media(min-width:768px){.row-3cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}}
+@media(max-width:767px){
+  .grid2{grid-template-columns:1fr}
+  .col-2{flex:1 1 100%}
+  .ln-n{min-width:80px;font-size:12px}
+  .ln-a{min-width:60px;font-size:12px}
+  .ln-d{min-width:90px;font-size:10px}
+  .header h1{font-size:18px}
+  .metric .val{font-size:22px}
+  .row-3cols{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>📊 個人理財儀表板</h1>
-  <div class="update">最後更新：<span id="updateTime">--</span>｜資料來源：CubeLV 資產結算</div>
+  <div class="sub">最後更新：<span id="updateTime">載入中…</span>｜資料來源：CubeLV</div>
 </div>
 
-<div class="container">
+<div class="container" id="app"><div class="loading">⏳ 載入資料中…</div></div>
+<div class="footer">由 CubeLV AI 自動產生｜股價每日 18:00 更新｜<span id="footerVer"></span></div>
 
+<script>
+// ==== 靜態資料 ====
+const FX = ()=>DATA.exchangeRate||31.67;
+const toTWD = (s)=>{
+  const p = DATA.prices?.[s.symbol] || s.costPrice;
+  return s.currency==='USD' ? p*FX() : p;
+};
+const costTWD = (s)=> s.currency==='USD' ? s.costPrice*FX() : s.costPrice;
+const fmtW = (v)=> (v/10000).toFixed(1)+'萬';
+const fmtN = (v)=> 'NT$'+v.toLocaleString();
+const fmtM = (v)=> v.toLocaleString();
+const fmtPct = (v)=> (v>=0?'+':'')+v.toFixed(1)+'%';
+
+const STOCKS = [
+  {symbol:'0050',shares:29000,costPrice:53,market:'台股',currency:'TWD'},
+  {symbol:'LEU',shares:267,costPrice:231,market:'美股',currency:'USD'},
+  {symbol:'XE',shares:155,costPrice:31,market:'美股',currency:'USD'},
+];
+
+const LOANS = [
+  {name:'新竹原房貸',amount:2162146,monthly:9793,rate:'2.52%',start:'2026-01',totalMonths:360,elapsed:297,day:10},
+  {name:'新竹增貸',amount:1800000,monthly:3945,rate:'2.63%',start:'2024-01',totalMonths:360,elapsed:29,day:10,note:'寬限期',graceMonths:44},
+  {name:'新竹裝潢貸款',amount:219685,monthly:1491,rate:'2.62%',start:'2023-01',totalMonths:240,elapsed:41,day:10},
+  {name:'台中房貸',amount:2800481,monthly:13250,rate:'2.40%',start:'2024-01',totalMonths:360,elapsed:29,day:19},
+  {name:'信貸',amount:1513213,monthly:22002,rate:'3.17%',start:'2021-01',totalMonths:84,elapsed:65,day:10},
+  {name:'0050質押',amount:1460000,monthly:3017,rate:'2.48%',note:'半年展延',isRevolving:true},
+];
+
+const REAL_ESTATE = {hsinchu:6580000, taichung:11740000};
+const CASH = 120000;
+
+const FIXED_EXPENSES = [
+  {cat:'房產貸款',amt:28479},{cat:'信貸',amt:22002},{cat:'質押利息',amt:3017},
+  {cat:'餐飲',amt:15000},{cat:'水電瓦斯',amt:3000},{cat:'保險',amt:1667},
+  {cat:'網路通訊',amt:976},{cat:'訂閱服務',amt:1939},
+];
+
+// 麻布實際月支出
+const ACTUAL_EXPENSES = [
+  {month:'1月',dining:24385,transport:12166,shopping:7510,entertainment:22096,cash:53000,housing:19004,insurance:13158,loan:22002,other:11514},
+  {month:'2月',dining:45697,transport:7982,shopping:10965,entertainment:11800,cash:21000,housing:16981,loan:22002,other:2320},
+  {month:'3月',dining:13461,transport:5338,shopping:16881,entertainment:35432,cash:21005,housing:15769,loan:22002,medical:2403,other:5379},
+  {month:'4月',dining:19367,transport:5078,shopping:15237,entertainment:26384,cash:9005,housing:19058,insurance:2703,tax:13206,loan:22002,medical:2623,other:1645},
+  {month:'5月',dining:15166,transport:5801,shopping:37592,entertainment:13430,cash:10005,housing:15874,insurance:2534,loan:22002,other:3362},
+  {month:'6月',dining:10595,transport:5271,shopping:9596,entertainment:34758,cash:8015,housing:15869,insurance:1160,other:469},
+];
+
+// 0050 股息
+const DIVIDENDS = [
+  {date:'2025-07-16',perShare:3.80,total:110200},
+  {date:'2025-01-17',perShare:3.60,total:104400},
+  {date:'2024-07-17',perShare:3.40,total:98600},
+  {date:'2024-01-17',perShare:3.50,total:101500},
+  {date:'2023-07-18',perShare:3.20,total:92800},
+];
+
+let DATA={prices:{},exchangeRate:31.67,netWorthHistory:[],lastUpdated:''};
+
+// ==== 載入 ====
+async function init(){
+  try{
+    const r=await fetch('data.json');
+    if(r.ok) DATA=await r.json();
+  }catch(e){}
+  render();
+}
+function render(){
+  const el=document.getElementById('app');
+  const p=DATA.prices||{};
+  const fx=FX();
+  const dr=DATA.exchangeRate||31.67;
+
+  // 計算
+  let stockValTWD=0, stockCostTWD=0;
+  STOCKS.forEach(s=>{ stockValTWD+=s.shares*toTWD(s); stockCostTWD+=s.shares*costTWD(s); });
+  const reVal=REAL_ESTATE.hsinchu+REAL_ESTATE.taichung;
+  const totalAssets=stockValTWD+reVal+CASH;
+  let totalDebts=0; LOANS.forEach(l=>totalDebts+=l.amount);
+  const netWorth=totalAssets-totalDebts;
+
+  const now=new Date();
+  const graceLeft=LOANS[1].graceMonths ? LOANS[1].graceMonths-LOANS[1].elapsed : 0;
+
+  document.getElementById('updateTime').textContent=
+    DATA.lastUpdated ? new Date(DATA.lastUpdated).toLocaleString('zh-TW') : '手動更新';
+  document.getElementById('footerVer').textContent='匯率 '+dr+'｜更新 '+new Date().toLocaleDateString('zh-TW');
+
+  // 貸款動態剩餘期數
+  const loanRows=LOANS.map(l=>{
+    if(l.isRevolving) return {...l,remaining:null,pct:50};
+    const remaining=Math.max(0, l.totalMonths-l.elapsed);
+    const pct=Math.min(100,(l.elapsed/l.totalMonths*100));
+    return {...l,remaining,pct};
+  });
+
+  el.innerHTML=`
 <!-- 總淨值 -->
 <div class="card">
   <h2>💎 總淨值</h2>
-  <div class="grid3">
-    <div class="metric"><div class="value" id="totalAssets">--</div><div class="label">總資產</div></div>
-    <div class="metric"><div class="value" id="totalDebts">--</div><div class="label negative">總負債</div></div>
-    <div class="metric"><div class="value" id="netWorth">--</div><div class="label positive">淨值</div></div>
+  <div class="row-3cols">
+    <div class="metric"><div class="val" style="color:#f0f6fc">${fmtN(totalAssets)}</div><div class="lbl">總資產</div></div>
+    <div class="metric"><div class="val negative">−${fmtN(totalDebts)}</div><div class="lbl">總負債</div></div>
+    <div class="metric"><div class="val ${netWorth>=0?'positive':'negative'}">${fmtN(netWorth)}</div><div class="lbl">淨值 <span style="font-size:10px;color:#8b949e">(${fmtW(netWorth)})</span></div></div>
   </div>
 </div>
 
-<!-- 資產分配圖 -->
+<!-- 淨值走勢 -->
 <div class="card">
-  <h2>📊 資產分配</h2>
-  <div class="canvas-wrap"><canvas id="assetChart"></canvas></div>
+  <h2>📈 淨值走勢（半年）</h2>
+  <div class="canvas-wrap"><canvas id="chartNW"></canvas></div>
+</div>
+
+<!-- 資產分配 + 持股 -->
+<div class="row">
+  <div class="col card">
+    <h2>🍩 資產分配</h2>
+    <div class="canvas-wrap"><canvas id="chartAsset"></canvas></div>
+  </div>
+  <div class="col card">
+    <h2>📈 持股概覽</h2>
+    ${STOCKS.map(s=>{
+      const priceTWD=toTWD(s);
+      const cTWD=costTWD(s);
+      const val=s.shares*priceTWD;
+      const cost=s.shares*cTWD;
+      const pl=val-cost;
+      const plPct=cost>0?(pl/cost*100):0;
+      const cl=pl>=0?'positive':'negative';
+      const cur=s.currency=='USD'?' US$'+p[s.symbol]+' →':'';
+      return`<div class="ln-row">
+        <div class="ln-n">${s.symbol} <span class="dim" style="font-size:10px">(${s.market})</span></div>
+        <div style="font-size:11px;color:#8b949e;flex:1;text-align:center">${fmtM(s.shares)}股 ×${cur} NT$${priceTWD.toFixed(0)}</div>
+        <div class="ln-a ${cl}">${pl>=0?'+':''}${fmtW(pl)}</div>
+        <div class="ln-d">市值 ${fmtW(val)}｜${fmtPct(plPct)}</div>
+      </div>`;
+    }).join('')}
+  </div>
 </div>
 
 <!-- 房產 -->
 <div class="card">
   <h2>🏠 房產</h2>
   <div class="grid2">
-    <div class="estate-card">
-      <h3>🏢 新竹・春福大地 NO1</h3>
-      <div class="estate-row"><span>市值</span><span>NT$6,580,000</span></div>
-      <div class="estate-row"><span>原房貸</span><span class="negative">−$2,162,146</span></div>
-      <div class="estate-row"><span>增貸</span><span class="negative">−$1,800,000</span></div>
-      <div class="estate-row"><span>裝潢貸款</span><span class="negative">−$219,685</span></div>
-      <div class="estate-row" style="border-top:1px solid #30363d;margin-top:8px;padding-top:8px;font-weight:600"><span>淨值</span><span id="hsinchuNet" class="positive">--</span></div>
+    <div>
+      <h3>🏢 新竹・春福大地</h3>
+      <div class="estate-row"><span>市值</span><span>${fmtN(REAL_ESTATE.hsinchu)}</span></div>
+      <div class="estate-row"><span>原房貸</span><span class="negative">−${fmtN(LOANS[0].amount)}</span></div>
+      <div class="estate-row"><span>增貸</span><span class="negative">−${fmtN(LOANS[1].amount)}</span></div>
+      <div class="estate-row"><span>裝潢貸款</span><span class="negative">−${fmtN(LOANS[2].amount)}</span></div>
+      <div class="estate-row nr"><span>淨值</span><span class="positive">${fmtN(REAL_ESTATE.hsinchu-LOANS[0].amount-LOANS[1].amount-LOANS[2].amount)}</span></div>
     </div>
-    <div class="estate-card">
+    <div>
       <h3>🏡 台中・豐原透天</h3>
-      <div class="estate-row"><span>市值</span><span>NT$11,740,000</span></div>
-      <div class="estate-row"><span>房貸</span><span class="negative">−$2,800,481</span></div>
-      <div class="estate-row" style="border-top:1px solid #30363d;margin-top:8px;padding-top:8px;font-weight:600"><span>淨值</span><span id="taichungNet" class="positive">--</span></div>
+      <div class="estate-row"><span>市值</span><span>${fmtN(REAL_ESTATE.taichung)}</span></div>
+      <div class="estate-row"><span>房貸</span><span class="negative">−${fmtN(LOANS[3].amount)}</span></div>
+      <div class="estate-row nr"><span>淨值</span><span class="positive">${fmtN(REAL_ESTATE.taichung-LOANS[3].amount)}</span></div>
     </div>
   </div>
 </div>
 
-<!-- 貸款進度 -->
+<!-- 貸款 -->
 <div class="card">
   <h2>📅 貸款還款進度</h2>
-  <div id="loansList"></div>
+  ${loanRows.map(l=>{
+    const barCls=l.pct>75?'bg':l.pct>50?'bb':l.pct>25?'by':'br';
+    return`<div class="ln-row">
+      <div style="flex:1">
+        <div class="ln-n">${l.name}${l.note?' <span class="warn" style="font-size:10px">('+l.note+')</span>':''}</div>
+        <div style="font-size:10px;color:#8b949e">利率 ${l.rate}${l.day?'｜每月'+l.day+'日扣':''}${l.graceMonths&&graceLeft>0?'｜寬限剩'+graceLeft+'個月':''}</div>
+        <div class="bar-wrap"><div class="bar-fill ${barCls}" style="width:${l.pct}%"></div></div>
+      </div>
+      <div class="ln-a">$${fmtM(l.monthly)}/月</div>
+      <div class="ln-d">本金 $${fmtW(l.amount)}${l.remaining!=null?'｜剩'+l.remaining+'期':''}</div>
+    </div>`;
+  }).join('')}
 </div>
 
-<!-- 每月支出 -->
+<!-- 支出 -->
+<div class="row">
+  <div class="col card">
+    <h2>🧾 每月固定支出</h2>
+    <div class="canvas-wrap"><canvas id="chartFixExp"></canvas></div>
+    <div style="text-align:center;margin-top:8px;font-size:13px;color:#f0f6fc">
+      月固定 <strong>$${fmtM(FIXED_EXPENSES.reduce((a,e)=>a+e.amt,0))}</strong>
+      <span class="dim" style="font-size:11px">（不含變動消費）</span>
+    </div>
+  </div>
+  <div class="col card">
+    <h2>📊 上半年實際支出</h2>
+    <div class="canvas-wrap"><canvas id="chartActExp"></canvas></div>
+  </div>
+</div>
+
+<!-- 0050 股息 -->
 <div class="card">
-  <h2>🧾 每月固定支出</h2>
-  <div class="grid2">
-    <div>
-      <div class="metric"><div class="value" style="font-size:24px" id="monthlyOut">$76,080</div><div class="label">月支出</div></div>
-    </div>
-    <div>
-      <div class="metric"><div class="value" style="font-size:24px" id="monthlyIn">$114,167</div><div class="label positive">月收入（估）</div></div>
-    </div>
-  </div>
-  <div style="margin-top:16px">
-    <div class="canvas-wrap"><canvas id="expenseChart"></canvas></div>
-  </div>
+  <h2>💵 0050 股息紀錄（29,000股）</h2>
+  <table class="tbl">
+    <tr><th>除息日</th><th>每股</th><th>總額</th><th>年化殖利率</th></tr>
+    ${DIVIDENDS.map(d=>`<tr>
+      <td>${d.date}</td>
+      <td>$${d.perShare}</td>
+      <td class="positive">$${fmtM(d.total)}</td>
+      <td class="dim">${(d.perShare/STOCKS[0].costPrice*100).toFixed(1)}%</td>
+    </tr>`).join('')}
+    <tr class="total"><td>累計</td><td>$17.50</td><td class="positive">$${fmtM(DIVIDENDS.reduce((a,d)=>a+d.total,0))}</td><td></td></tr>
+  </table>
+  <div style="font-size:10px;color:#8b949e;margin-top:4px">* 0050 年配息約 2 次，成本 $53</div>
 </div>
 
 <!-- 提醒 -->
 <div class="card">
   <h2>⚠️ 重要提醒</h2>
   <div class="alert">
-    <strong>📅 每月 10 日扣款日</strong>：新竹房貸 $9,793 + 增貸 $3,945 + 裝潢 $1,491 + 信貸 $22,002 = 共 <strong>$37,231</strong> 一天扣，確保帳戶餘額充足
+    <strong>📅 每月 10 日扣款</strong>：新竹房貸 + 信貸 = <strong>$37,231</strong> 一天扣，確保帳戶有錢
   </div>
   <div class="alert">
-    <strong>⏳ 寬限期倒數</strong>：新竹增貸約 <strong id="graceMonths">15</strong> 個月後轉本息，月付 +$3,820 → $7,765
+    <strong>⏳ 寬限期倒數</strong>：新竹增貸約 <strong>${Math.max(0,graceLeft)}</strong> 個月後轉本息，月付 +$3,820 → $7,765
   </div>
   <div class="alert alert-red">
-    <strong>📉 0050 質押維持率</strong>：借款 $146 萬，29,000 股。維持率下限 130% → 股價低於 <strong>$65.5</strong> 需補繳（目前 <span id="p0050Now">$--</span>）
+    <strong>📉 0050 質押維持率</strong>：借款 $146 萬，29,000 股。下限 130% → 股價低於 <strong>$65.5</strong> 須補繳（目前 <span id="p0050Now">$${p['0050']||'--'}</span>）
   </div>
-</div>
-
-<!-- 股市 -->
-<div class="card">
-  <h2>📈 持股概覽</h2>
-  <div id="stocksList"></div>
-</div>
-
-<div class="footer">
-  由 CubeLV AI 自動產生｜資料每日更新
-</div>
-
-</div>
-
-<script>
-// ==== 資料 ====
-const data = {
-  exchangeRate: 31.67, // USD/TWD
-  stocks: [
-    {symbol:'0050',shares:29000,costPrice:53,market:'台股',currency:'TWD'},
-    {symbol:'LEU',shares:267,costPrice:231,market:'美股',currency:'USD'},
-    {symbol:'XE',shares:155,costPrice:31,market:'美股',currency:'USD'},
-  ],
-  // 市價（台股=TWD，美股=USD）
-  prices: {
-    '0050':107.30,'LEU':191.40,'XE':21.56
-  },
-  loans: [
-    {name:'新竹原房貸',amount:2162146,monthly:9793,rate:'2.52%',remaining:63,day:10},
-    {name:'新竹增貸(寬限)',amount:1800000,monthly:3945,rate:'2.63%',remaining:339,day:10,note:'寬限期',graceEnd:15},
-    {name:'新竹裝潢貸款',amount:219685,monthly:1491,rate:'2.62%',remaining:178,day:10},
-    {name:'台中房貸',amount:2800481,monthly:13250,rate:'2.40%',remaining:85,day:19},
-    {name:'信貸',amount:1513213,monthly:22002,rate:'3.17%',remaining:76,day:10},
-    {name:'0050質押',amount:1460000,monthly:3017,rate:'2.48%',remaining:null,day:null,note:'半年展延'},
-  ],
-  realEstate:{hsinchu:6580000,taichung:11740000},
-  monthlyExpenses:[
-    {cat:'房產貸款',amt:28479},{cat:'信貸',amt:22002},{cat:'質押利息',amt:3017},
-    {cat:'餐飲',amt:15000},{cat:'水電瓦斯',amt:3000},{cat:'保險',amt:1667},
-    {cat:'網路通訊',amt:976},{cat:'訂閱服務',amt:1939},
-  ]
-};
-
-// ==== 計算 ====
-const fx = ()=>data.exchangeRate;
-function toTWD(s){
-  const p = data.prices[s.symbol] || s.costPrice;
-  return s.currency==='USD' ? p*fx() : p;
-}
-function costTWD(s){
-  return s.currency==='USD' ? s.costPrice*fx() : s.costPrice;
-}
-function fmtW(v){return 'NT$'+(v/10000).toFixed(1)+'萬';}
-function fmtPct(v){return (v>=0?'+':'')+v.toFixed(1)+'%';}
-function getPriceDisplay(s){
-  const p = data.prices[s.symbol] || s.costPrice;
-  if(s.currency==='USD') return 'US$'+p+' (NT$'+(p*fx()).toFixed(0)+')';
-  return 'NT$'+p;
-}
-
-function calc(){
-  let stockValTWD = 0, stockCostTWD = 0;
-  data.stocks.forEach(s=>{
-    stockValTWD += s.shares * toTWD(s);
-    stockCostTWD += s.shares * costTWD(s);
-  });
-  const reVal = data.realEstate.hsinchu + data.realEstate.taichung;
-  const totalAssets = stockValTWD + reVal + 120000;
-  let totalDebts = 0; data.loans.forEach(l=>totalDebts+=l.amount);
-  const netWorth = totalAssets - totalDebts;
-
-  document.getElementById('totalAssets').textContent=fmtW(totalAssets);
-  document.getElementById('totalDebts').textContent='−'+fmtW(totalDebts);
-  const nw = document.getElementById('netWorth');
-  nw.textContent=fmtW(netWorth);
-  nw.className='value '+(netWorth>=0?'positive':'negative');
-  document.getElementById('hsinchuNet').textContent=fmtW(2398169);
-  document.getElementById('taichungNet').textContent=fmtW(8939519);
-  document.getElementById('updateTime').textContent=new Date().toLocaleString('zh-TW');
-
-  // 貸款列表
-  let loanHtml='';
-  data.loans.forEach(l=>{
-    const pct = l.remaining ? Math.max(0,100-(l.remaining/360*100)) : 100;
-    const barCls = pct>75?'bar-green':pct>50?'bar-blue':pct>25?'bar-yellow':'bar-red';
-    loanHtml+=`<div class="loan-row">
-      <div style="flex:1">
-        <div class="loan-name">${l.name}${l.note?' <span style="color:#d29922;font-size:11px">('+l.note+')</span>':''}</div>
-        <div style="font-size:11px;color:#8b949e">利率 ${l.rate}${l.day?'｜每月'+l.day+'日扣':''}${l.graceEnd?'｜約'+l.graceEnd+'個月後轉本息':''}</div>
-        <div class="bar-wrap"><div class="bar-fill ${barCls}" style="width:${pct}%"></div></div>
-      </div>
-      <div class="loan-amnt">$${l.monthly.toLocaleString()}/月</div>
-      <div class="loan-detail">本金 $${(l.amount/10000).toFixed(1)}萬${l.remaining?'｜剩'+l.remaining+'期':''}</div>
-    </div>`;
-  });
-  document.getElementById('loansList').innerHTML=loanHtml;
-
-  // 持股
-  let stockHtml='';
-  data.stocks.forEach(s=>{
-    const priceTWD = toTWD(s);
-    const costTWDVal = costTWD(s);
-    const val = s.shares * priceTWD;
-    const cost = s.shares * costTWDVal;
-    const pl = val - cost;
-    const plPct = cost>0 ? (pl/cost*100) : 0;
-    const plCls = pl>=0?'positive':'negative';
-    stockHtml+=`<div class="loan-row">
-      <div class="loan-name">${s.symbol} <span style="font-size:11px;color:#8b949e">(${s.market}${s.currency==='USD'?'｜匯率 '+fx():''})</span></div>
-      <div style="font-size:12px;color:#8b949e">${s.shares.toLocaleString()}股 × ${getPriceDisplay(s)}</div>
-      <div class="loan-amnt ${plCls}">${pl>=0?'+':''}${(pl/10000).toFixed(1)}萬</div>
-      <div class="loan-detail">市值 ${fmtW(val)}｜${fmtPct(plPct)}</div>
-    </div>`;
-  });
-  document.getElementById('stocksList').innerHTML=stockHtml;
-
-  // 0050 維持率
-  const p0050 = data.prices['0050']||120;
-  document.getElementById('p0050Now').textContent='$'+p0050;
+  <div class="alert">
+    <strong>💰 本月 6 月消費</strong>：實際支出約 <strong>$${fmtM(ACTUAL_EXPENSES[5]?Object.values(ACTUAL_EXPENSES[5]).filter((_,i)=>i>0).reduce((a,v)=>a+v,0):'--')}</strong>
+    ${(()=>{
+      const jun=ACTUAL_EXPENSES[5];
+      if(!jun) return '';
+      const total=Object.entries(jun).filter(([k])=>k!=='month').reduce((a,[,v])=>a+v,0);
+      const may=ACTUAL_EXPENSES[4];
+      const mayTotal=may?Object.entries(may).filter(([k])=>k!=='month').reduce((a,[,v])=>a+v,0):0;
+      if(mayTotal<=0) return '';
+      const chg=((total-mayTotal)/mayTotal*100);
+      const badge=chg>0?'<span class="badge badge-up">▲'+chg.toFixed(0)+'%</span>':'<span class="badge badge-down">▼'+Math.abs(chg).toFixed(0)+'%</span>';
+      return '（較上月 '+badge+'）';
+    })()}
+  </div>
+</div>`;
 
   // 圖表
-  drawCharts(totalAssets,totalDebts,stockValTWD,reVal);
+  drawCharts(netWorth,stockValTWD,reVal,totalAssets);
 }
 
-function drawCharts(totalAssets,totalDebts,stockValTWD,reVal){
+function drawCharts(netWorth,stockValTWD,reVal,totalAssets){
+  // 淨值走勢
+  const h=DATA.netWorthHistory||[];
+  if(h.length>0){
+    new Chart(document.getElementById('chartNW'),{
+      type:'line',
+      data:{
+        labels:h.map(d=>d.date.slice(5)),
+        datasets:[{
+          label:'淨值 (萬)',data:h.map(d=>d.value/10000),
+          borderColor:'#58a6ff',backgroundColor:'rgba(88,166,255,0.1)',
+          fill:true,tension:0.3,pointRadius:4,pointBackgroundColor:'#58a6ff'
+        }]
+      },
+      options:{
+        plugins:{legend:{display:false}},
+        scales:{
+          x:{ticks:{color:'#8b949e',maxTicksLimit:6},grid:{color:'#21262d'}},
+          y:{ticks:{color:'#8b949e',callback:v=>v+'萬'},grid:{color:'#21262d'}}
+        }
+      }
+    });
+  }
+
   // 資產分配
-  const twVal = data.stocks.filter(s=>s.currency=='TWD').reduce((a,s)=>a+s.shares*toTWD(s),0);
-  const usVal = data.stocks.filter(s=>s.currency=='USD').reduce((a,s)=>a+s.shares*toTWD(s),0);
-  new Chart(document.getElementById('assetChart'),{
+  const twVal=STOCKS.filter(s=>s.currency=='TWD').reduce((a,s)=>a+s.shares*toTWD(s),0);
+  const usVal=STOCKS.filter(s=>s.currency=='USD').reduce((a,s)=>a+s.shares*toTWD(s),0);
+  new Chart(document.getElementById('chartAsset'),{
     type:'doughnut',
     data:{
       labels:['台股','美股','新竹房產','台中房產','現金'],
-      datasets:[{data:[
-        twVal,usVal,
-        data.realEstate.hsinchu,data.realEstate.taichung,120000
-      ],backgroundColor:['#58a6ff','#3fb950','#d29922','#f85149','#8b949e']}]
+      datasets:[{data:[twVal,usVal,REAL_ESTATE.hsinchu,REAL_ESTATE.taichung,CASH],
+        backgroundColor:['#58a6ff','#3fb950','#d29922','#f85149','#8b949e']}]
     },
-    options:{plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',padding:16}}}}
+    options:{plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',padding:12,font:{size:11}}}}}
   });
 
-  // 支出
-  new Chart(document.getElementById('expenseChart'),{
+  // 固定支出
+  new Chart(document.getElementById('chartFixExp'),{
     type:'bar',
     data:{
-      labels:data.monthlyExpenses.map(e=>e.cat),
-      datasets:[{label:'月支出',data:data.monthlyExpenses.map(e=>e.amt),
+      labels:FIXED_EXPENSES.map(e=>e.cat),
+      datasets:[{data:FIXED_EXPENSES.map(e=>e.amt),
         backgroundColor:['#f85149','#f85149','#d29922','#58a6ff','#58a6ff','#58a6ff','#58a6ff','#58a6ff']}]
     },
     options:{
       indexAxis:'y',
       plugins:{legend:{display:false}},
-      scales:{x:{ticks:{color:'#8b949e'},grid:{color:'#21262d'}},y:{ticks:{color:'#c9d1d9'},grid:{display:false}}}
+      scales:{x:{ticks:{color:'#8b949e'},grid:{color:'#21262d'}},y:{ticks:{color:'#c9d1d9',font:{size:10}},grid:{display:false}}}
+    }
+  });
+
+  // 實際支出走勢
+  const months=ACTUAL_EXPENSES.map(e=>e.month);
+  const expKeys=['dining','shopping','entertainment','transport','cash','housing','other'];
+  const expColors={'dining':'#58a6ff','shopping':'#d29922','entertainment':'#3fb950','transport':'#8b949e','cash':'#f85149','housing':'#bc8cff','other':'#484f58'};
+  const expLabels={'dining':'餐飲','shopping':'購物','entertainment':'娛樂','transport':'交通','cash':'現金','housing':'住家','other':'其他'};
+  new Chart(document.getElementById('chartActExp'),{
+    type:'bar',
+    data:{
+      labels:months,
+      datasets:expKeys.map(k=>({
+        label:expLabels[k],
+        data:ACTUAL_EXPENSES.map(e=>e[k]||0),
+        backgroundColor:expColors[k]
+      }))
+    },
+    options:{
+      plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',font:{size:10},padding:8,boxWidth:10}}},
+      scales:{
+        x:{stacked:true,ticks:{color:'#8b949e',font:{size:10}},grid:{display:false}},
+        y:{stacked:true,ticks:{color:'#8b949e',callback:v=>v/10000+'萬'},grid:{color:'#21262d'}}
+      }
     }
   });
 }
 
-calc();
+init();
 </script>
 </body>
 </html>

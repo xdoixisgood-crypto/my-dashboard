@@ -151,9 +151,29 @@ function render(){
   const gap=Math.max(0,targetRetirement-projectedAt60);
   const monthlyGap=gap>0?Math.round(gap/(((Math.pow(1.005,yearsToRetire*12)-1)/0.005))):0;
   // 房貸清償後釋出金流（新竹+台中房貸月付合計）
+  // FIRE & 現金流基礎
+  const r2=ACTUAL_EXPENSES.slice(-6);
+  const avgMonthlyExp=Math.round(r2.reduce((a,m)=>{let s=0;for(const k of Object.keys(m)){if(k!=='month')s+=m[k];}return a+s;},0)/r2.length);
+  const fixedTotal=FIXED_EXPENSES.reduce((a,e)=>a+e.amt,0);
+  const loanTotalMonthly=LOANS.reduce((a,l)=>a+(l.monthly||0),0);
+  const hNW=DATA.netWorthHistory||[];
+  const estMonthlyGain=hNW.length>=2?Math.round((hNW[hNW.length-1].value-hNW[0].value)/(hNW.length-1)):80000;
+  const estIncome=Math.round(estMonthlyGain+avgMonthlyExp);
   const mortgageMonthly=9793+3945+1491+13250;
-  const lastLoanYear=2031; // 信貸最後清償年份
-  const monthlyFreeAfterLoans=mortgageMonthly+22002; // 房貸+信貸
+  const lastLoanYear=2031;
+  const monthlyFreeAfterLoans=mortgageMonthly+22002;
+
+  // FIRE
+  const passiveIncome=Math.round(29000*3.6);
+  const annualExpense=avgMonthlyExp*12;
+  const firePct=Math.min(100,Math.round(passiveIncome/annualExpense*100));
+  const yearsToFire=firePct>0?Math.round((annualExpense-passiveIncome)/(passiveIncome||1)*10)/10:'--';
+
+  // 現金流
+  const avgVarExp=Math.round(avgMonthlyExp-loanTotalMonthly);
+  const monthlyExpense2=Math.round(fixedTotal+avgVarExp);
+  const monthlySaving=Math.round(estMonthlyGain-monthlyExpense2);
+  const savingRate=estIncome>0?Math.round(monthlySaving/estIncome*100):0;
 
   const now=new Date();
   const graceLeft=LOANS[1].graceMonths ? LOANS[1].graceMonths-LOANS[1].elapsed : 0;
@@ -189,7 +209,10 @@ function render(){
 
 <!-- 持股 -->
 <div class="card">
-  <h2>📈 持股概覽</h2>
+  <h2>📈 持股概覽｜逐筆報酬率</h2>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#8b949e;padding:0 0 8px 0;border-bottom:1px solid #21262d">
+        <span style="min-width:65px">標的</span><span style="flex:1;text-align:center">成本均價</span><span style="flex:1;text-align:center">現價</span><span style="min-width:55px;text-align:right">損益</span><span style="min-width:90px;text-align:right">市值／報酬率</span>
+      </div>
     ${STOCKS.map(s=>{
       const priceTWD=toTWD(s);
       const cTWD=costTWD(s);
@@ -201,11 +224,17 @@ function render(){
       const cur=s.currency=='USD'?' US$'+p[s.symbol]+' →':'';
       return`<div class="ln-row">
         <div class="ln-n">${s.symbol} <span class="dim" style="font-size:10px">(${s.market})</span></div>
-        <div style="font-size:11px;color:#8b949e;flex:1;text-align:center">${fmtM(s.shares)}股 ×${cur} NT$${priceTWD.toFixed(0)}</div>
-        <div class="ln-a ${cl}">${pl>=0?'+':''}${fmtW(pl)}</div>
-        <div class="ln-d">市值 ${fmtW(val)}｜${fmtPct(plPct)}</div>
+        <div style="flex:1;text-align:center;font-size:12px;color:#c9d1d9">NT$<b>${cTWD.toFixed(0)}</b><br><span class="dim" style="font-size:9px">${fmtM(s.shares)}股</span></div>
+        <div style="flex:1;text-align:center;font-size:12px;color:#c9d1d9">NT$<b>${priceTWD.toFixed(0)}</b>${cur?'<br><span class="dim" style="font-size:9px">'+cur.trim()+'</span>':''}</div>
+        <div class="ln-a ${cl}" style="min-width:55px">${pl>=0?'+':''}${fmtW(pl)}</div>
+        <div class="ln-d" style="min-width:90px">市值 ${fmtW(val)}<br><span class="dim" style="font-size:10px">${fmtPct(plPct)}</span></div>
       </div>`;
     }).join('')}
+      <div style="border-top:1px solid #30363d;margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;font-size:12px;color:#8b949e">
+        <span>總投入 <strong style="color:#f0f6fc">$${fmtW(stockCostTWD)}</strong></span>
+        <span>總市值 <strong style="color:#f0f6fc">$${fmtW(stockValTWD)}</strong></span>
+        <span>總報酬 <strong style="color:${stockValTWD-stockCostTWD>=0?'#3fb950':'#f85149'}">${stockValTWD-stockCostTWD>=0?'+':''}$${fmtW(stockValTWD-stockCostTWD)} (${stockCostTWD>0?fmtPct((stockValTWD-stockCostTWD)/stockCostTWD*100):'--'})</strong></span>
+      </div>
 </div>
 
 <!-- 房產 -->
@@ -297,6 +326,36 @@ function render(){
     </div>
   </div>
 </div>
+    
+    <!-- FIRE 倒數 -->
+    <div class="card" style="margin-top:0">
+      <h2>🔥 FIRE 進度（財務自由倒數）</h2>
+      <div class="grid2">
+        <div><div class="metric"><div class="val" style="color:#3fb950">$${fmtM(passiveIncome)}<span style="font-size:14px">/年</span></div><div class="lbl">被動收入（0050 配息）</div></div></div>
+        <div><div class="metric"><div class="val" style="color:#f85149">$${fmtM(annualExpense)}<span style="font-size:14px">/年</span></div><div class="lbl">年支出（6個月平均×12）</div></div></div>
+      </div>
+      <div class="bar-wrap" style="height:16px;margin-top:14px;border-radius:8px">
+        <div class="bar-fill" style="width:${firePct}%;border-radius:8px;background:${firePct>=50?'#3fb950':firePct>=25?'#d29922':'#f85149'}"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#8b949e;margin-top:6px">
+        <span>達成 <strong style="color:#f0f6fc">${firePct}%</strong>｜被動收入還差 <strong style="color:#f85149">$${fmtM(annualExpense-passiveIncome)}/年</strong></span>
+        <span>${firePct>=100?'🎉 已達標！':'還需要 '+yearsToFire+' 年'}</span>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:#8b949e;text-align:center">FIRE 公式：被動收入 ≥ 年支出。目前全靠 0050 配息（約 $3.6/股），隨持股增加會加速。</div>
+    </div>
+    
+    <!-- 現金流 -->
+    <div class="card" style="margin-top:0">
+      <h2>💵 每月現金流</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="metric"><div class="val" style="color:#58a6ff">$${fmtM(estIncome)}</div><div class="lbl">預估月收入</div></div>
+        <div class="metric"><div class="val" style="color:#f85149">$${fmtM(monthlyExpense2)}</div><div class="lbl">月總支出</div></div>
+        <div class="metric"><div class="val" style="color:${monthlySaving>=0?'#3fb950':'#f85149'}">${monthlySaving>=0?'+':''}$${fmtM(monthlySaving)}</div><div class="lbl">月淨結餘</div></div>
+      </div>
+      <div style="margin-top:12px;font-size:11px;color:#8b949e;text-align:center">
+        儲蓄率 <strong style="color:#3fb950">${savingRate}%</strong>｜固定 $${fmtM(fixedTotal)} + 變動均 $${fmtM(avgVarExp)} + 貸款 $${fmtM(loanTotalMonthly)}
+      </div>
+    </div>
 
 <!-- 提醒 -->
 <div class="card">

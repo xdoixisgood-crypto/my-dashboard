@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>個人理財儀表板</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e1e4e8;min-height:100vh}
+.header{background:#161b22;border-bottom:1px solid #30363d;padding:20px 16px;position:sticky;top:0;z-index:10}
+.header h1{font-size:22px;font-weight:600;color:#58a6ff}
+.header .update{font-size:12px;color:#8b949e;margin-top:4px}
+.container{max-width:900px;margin:0 auto;padding:16px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin-bottom:16px}
+.card h2{font-size:16px;font-weight:600;margin-bottom:16px;color:#f0f6fc}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.metric{text-align:center}
+.metric .value{font-size:28px;font-weight:700;color:#f0f6fc}
+.metric .label{font-size:12px;color:#8b949e;margin-top:4px}
+.positive{color:#3fb950!important}
+.negative{color:#f85149!important}
+.warning{color:#d29922!important}
+.bar-wrap{background:#21262d;border-radius:6px;height:10px;overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;border-radius:6px;transition:width .5s}
+.bar-green{background:#3fb950}
+.bar-blue{background:#58a6ff}
+.bar-yellow{background:#d29922}
+.bar-red{background:#f85149}
+.loan-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #21262d;font-size:14px}
+.loan-row:last-child{border-bottom:none}
+.loan-name{color:#f0f6fc;min-width:110px}
+.loan-amnt{color:#f0f6fc;font-weight:600;min-width:80px;text-align:right}
+.loan-detail{color:#8b949e;font-size:12px;min-width:140px;text-align:right}
+.alert{background:#1a1a2e;border-left:3px solid #d29922;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px;font-size:14px}
+.alert strong{color:#d29922}
+.alert-red{border-left-color:#f85149}
+.alert-red strong{color:#f85149}
+.estate-card{background:#0d1117;border:1px solid #30363d;border-radius:10px;padding:16px}
+.estate-card h3{font-size:15px;color:#58a6ff;margin-bottom:12px}
+.estate-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:#c9d1d9}
+.canvas-wrap{position:relative;width:100%}
+.canvas-wrap canvas{width:100%!important;max-height:300px}
+.footer{text-align:center;padding:24px;color:#484f58;font-size:11px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 個人理財儀表板</h1>
+  <div class="update">最後更新：<span id="updateTime">--</span>｜資料來源：CubeLV 資產結算</div>
+</div>
+
+<div class="container">
+
+<!-- 總淨值 -->
+<div class="card">
+  <h2>💎 總淨值</h2>
+  <div class="grid3">
+    <div class="metric"><div class="value" id="totalAssets">--</div><div class="label">總資產</div></div>
+    <div class="metric"><div class="value" id="totalDebts">--</div><div class="label negative">總負債</div></div>
+    <div class="metric"><div class="value" id="netWorth">--</div><div class="label positive">淨值</div></div>
+  </div>
+</div>
+
+<!-- 資產分配圖 -->
+<div class="card">
+  <h2>📊 資產分配</h2>
+  <div class="canvas-wrap"><canvas id="assetChart"></canvas></div>
+</div>
+
+<!-- 房產 -->
+<div class="card">
+  <h2>🏠 房產</h2>
+  <div class="grid2">
+    <div class="estate-card">
+      <h3>🏢 新竹・春福大地 NO1</h3>
+      <div class="estate-row"><span>市值</span><span>NT$6,580,000</span></div>
+      <div class="estate-row"><span>原房貸</span><span class="negative">−$2,162,146</span></div>
+      <div class="estate-row"><span>增貸</span><span class="negative">−$1,800,000</span></div>
+      <div class="estate-row"><span>裝潢貸款</span><span class="negative">−$219,685</span></div>
+      <div class="estate-row" style="border-top:1px solid #30363d;margin-top:8px;padding-top:8px;font-weight:600"><span>淨值</span><span id="hsinchuNet" class="positive">--</span></div>
+    </div>
+    <div class="estate-card">
+      <h3>🏡 台中・豐原透天</h3>
+      <div class="estate-row"><span>市值</span><span>NT$11,740,000</span></div>
+      <div class="estate-row"><span>房貸</span><span class="negative">−$2,800,481</span></div>
+      <div class="estate-row" style="border-top:1px solid #30363d;margin-top:8px;padding-top:8px;font-weight:600"><span>淨值</span><span id="taichungNet" class="positive">--</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 貸款進度 -->
+<div class="card">
+  <h2>📅 貸款還款進度</h2>
+  <div id="loansList"></div>
+</div>
+
+<!-- 每月支出 -->
+<div class="card">
+  <h2>🧾 每月固定支出</h2>
+  <div class="grid2">
+    <div>
+      <div class="metric"><div class="value" style="font-size:24px" id="monthlyOut">$76,080</div><div class="label">月支出</div></div>
+    </div>
+    <div>
+      <div class="metric"><div class="value" style="font-size:24px" id="monthlyIn">$114,167</div><div class="label positive">月收入（估）</div></div>
+    </div>
+  </div>
+  <div style="margin-top:16px">
+    <div class="canvas-wrap"><canvas id="expenseChart"></canvas></div>
+  </div>
+</div>
+
+<!-- 提醒 -->
+<div class="card">
+  <h2>⚠️ 重要提醒</h2>
+  <div class="alert">
+    <strong>📅 每月 10 日扣款日</strong>：新竹房貸 $9,793 + 增貸 $3,945 + 裝潢 $1,491 + 信貸 $22,002 = 共 <strong>$37,231</strong> 一天扣，確保帳戶餘額充足
+  </div>
+  <div class="alert">
+    <strong>⏳ 寬限期倒數</strong>：新竹增貸約 <strong id="graceMonths">15</strong> 個月後轉本息，月付 +$3,820 → $7,765
+  </div>
+  <div class="alert alert-red">
+    <strong>📉 0050 質押維持率</strong>：借款 $146 萬，29,000 股。維持率下限 130% → 股價低於 <strong>$65.5</strong> 需補繳（目前約 $--）
+  </div>
+</div>
+
+<!-- 股市 -->
+<div class="card">
+  <h2>📈 持股概覽</h2>
+  <div id="stocksList"></div>
+</div>
+
+<div class="footer">
+  由 CubeLV AI 自動產生｜資料每日更新
+</div>
+
+</div>
+
+<script>
+// ==== 資料 ====
+const data = {
+  stocks: [
+    {symbol:'0050',shares:29000,costPrice:53,market:'台股',type:'TW'},
+    {symbol:'LEU',shares:267,costPrice:231,market:'美股',type:'US'},
+    {symbol:'XE',shares:155,costPrice:31,market:'美股',type:'US'},
+    {symbol:'00713',shares:26000,costPrice:58,market:'台股',type:'TW'},
+    {symbol:'00948B',shares:451000,costPrice:11,market:'台股',type:'TW'},
+    {symbol:'2317',shares:2000,costPrice:178,market:'台股',type:'TW'},
+    {symbol:'00753L',shares:18000,costPrice:12,market:'台股',type:'TW'},
+  ],
+  // 估算價格（需定期更新）
+  prices: {
+    '0050':120,'LEU':240,'XE':31,'00713':59,'00948B':10,'2317':269,'00753L':9
+  },
+  loans: [
+    {name:'新竹原房貸',amount:2162146,monthly:9793,rate:'2.52%',remaining:63,day:10},
+    {name:'新竹增貸(寬限)',amount:1800000,monthly:3945,rate:'2.63%',remaining:339,day:10,note:'寬限期',graceEnd:15},
+    {name:'新竹裝潢貸款',amount:219685,monthly:1491,rate:'2.62%',remaining:178,day:10},
+    {name:'台中房貸',amount:2800481,monthly:13250,rate:'2.40%',remaining:85,day:19},
+    {name:'信貸',amount:1513213,monthly:22002,rate:'3.17%',remaining:76,day:10},
+    {name:'0050質押',amount:1460000,monthly:3017,rate:'2.48%',remaining:null,day:null,note:'半年展延'},
+  ],
+  realEstate:{hsinchu:6580000,taichung:11740000},
+  monthlyExpenses:[
+    {cat:'房產貸款',amt:28479},{cat:'信貸',amt:22002},{cat:'質押利息',amt:3017},
+    {cat:'餐飲',amt:15000},{cat:'水電瓦斯',amt:3000},{cat:'保險',amt:1667},
+    {cat:'網路通訊',amt:976},{cat:'訂閱服務',amt:1939},
+  ]
+};
+
+// ==== 計算 ====
+function calc(){
+  let stockVal = 0, stockCost = 0;
+  data.stocks.forEach(s=>{
+    const p = data.prices[s.symbol] || s.costPrice;
+    stockVal += s.shares * p;
+    stockCost += s.shares * s.costPrice;
+  });
+  const reVal = data.realEstate.hsinchu + data.realEstate.taichung;
+  const totalAssets = stockVal + reVal + 120000; // +現金約12萬
+  let totalDebts = 0; data.loans.forEach(l=>totalDebts+=l.amount);
+  const netWorth = totalAssets - totalDebts;
+
+  document.getElementById('totalAssets').textContent='NT$'+(totalAssets/10000).toFixed(1)+'萬';
+  document.getElementById('totalDebts').textContent='−NT$'+(totalDebts/10000).toFixed(1)+'萬';
+  const nw = document.getElementById('netWorth');
+  nw.textContent='NT$'+(netWorth/10000).toFixed(1)+'萬';
+  nw.className='value '+(netWorth>=0?'positive':'negative');
+  document.getElementById('hsinchuNet').textContent='NT$'+(2398169/10000).toFixed(1)+'萬';
+  document.getElementById('taichungNet').textContent='NT$'+(8939519/10000).toFixed(1)+'萬';
+  document.getElementById('updateTime').textContent=new Date().toLocaleString('zh-TW');
+
+  // 貸款列表
+  let loanHtml='';
+  data.loans.forEach(l=>{
+    const pct = l.remaining ? Math.max(0,100-(l.remaining/360*100)) : 100;
+    const barCls = pct>75?'bar-green':pct>50?'bar-blue':pct>25?'bar-yellow':'bar-red';
+    loanHtml+=`<div class="loan-row">
+      <div style="flex:1">
+        <div class="loan-name">${l.name}${l.note?' <span style="color:#d29922;font-size:11px">('+l.note+')</span>':''}</div>
+        <div style="font-size:11px;color:#8b949e">利率 ${l.rate}${l.day?'｜每月'+l.day+'日扣':''}${l.graceEnd?'｜約'+l.graceEnd+'個月後轉本息':''}</div>
+        <div class="bar-wrap"><div class="bar-fill ${barCls}" style="width:${pct}%"></div></div>
+      </div>
+      <div class="loan-amnt">$${l.monthly.toLocaleString()}/月</div>
+      <div class="loan-detail">本金 $${(l.amount/10000).toFixed(1)}萬${l.remaining?'｜剩'+l.remaining+'期':''}</div>
+    </div>`;
+  });
+  document.getElementById('loansList').innerHTML=loanHtml;
+
+  // 持股
+  let stockHtml='';
+  data.stocks.forEach(s=>{
+    const p = data.prices[s.symbol] || s.costPrice;
+    const val = s.shares * p;
+    const cost = s.shares * s.costPrice;
+    const pl = val - cost;
+    const plPct = cost>0 ? (pl/cost*100).toFixed(1) : 0;
+    const plCls = pl>=0?'positive':'negative';
+    stockHtml+=`<div class="loan-row">
+      <div class="loan-name">${s.symbol} (${s.market})</div>
+      <div style="font-size:12px;color:#8b949e">${s.shares.toLocaleString()}股 × $${p}</div>
+      <div class="loan-amnt ${plCls}">${pl>=0?'+':''}${(pl/10000).toFixed(1)}萬</div>
+      <div class="loan-detail">市值 $${(val/10000).toFixed(1)}萬｜${pl>=0?'+':''}${plPct}%</div>
+    </div>`;
+  });
+  document.getElementById('stocksList').innerHTML=stockHtml;
+
+  // 0050 維持率
+  const p0050 = data.prices['0050']||120;
+  document.querySelector('.alert-red strong:last-child').textContent='$65.5 需補繳（目前 $'+p0050+')';
+
+  // 圖表
+  drawCharts(totalAssets,totalDebts,stockVal,reVal);
+}
+
+function drawCharts(totalAssets,totalDebts,stockVal,reVal){
+  // 資產分配
+  new Chart(document.getElementById('assetChart'),{
+    type:'doughnut',
+    data:{
+      labels:['台股','美股','新竹房產','台中房產','現金'],
+      datasets:[{data:[
+        data.stocks.filter(s=>s.type=='TW').reduce((a,s)=>a+s.shares*(data.prices[s.symbol]||s.costPrice),0),
+        data.stocks.filter(s=>s.type=='US').reduce((a,s)=>a+s.shares*(data.prices[s.symbol]||s.costPrice),0),
+        data.realEstate.hsinchu,data.realEstate.taichung,120000
+      ],backgroundColor:['#58a6ff','#3fb950','#d29922','#f85149','#8b949e']}]
+    },
+    options:{plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',padding:16}}}}
+  });
+
+  // 支出
+  new Chart(document.getElementById('expenseChart'),{
+    type:'bar',
+    data:{
+      labels:data.monthlyExpenses.map(e=>e.cat),
+      datasets:[{label:'月支出',data:data.monthlyExpenses.map(e=>e.amt),
+        backgroundColor:['#f85149','#f85149','#d29922','#58a6ff','#58a6ff','#58a6ff','#58a6ff','#58a6ff']}]
+    },
+    options:{
+      indexAxis:'y',
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#8b949e'},grid:{color:'#21262d'}},y:{ticks:{color:'#c9d1d9'},grid:{display:false}}}
+    }
+  });
+}
+
+calc();
+</script>
+</body>
+</html>

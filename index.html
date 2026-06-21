@@ -124,7 +124,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <strong>⏳ 寬限期倒數</strong>：新竹增貸約 <strong id="graceMonths">15</strong> 個月後轉本息，月付 +$3,820 → $7,765
   </div>
   <div class="alert alert-red">
-    <strong>📉 0050 質押維持率</strong>：借款 $146 萬，29,000 股。維持率下限 130% → 股價低於 <strong>$65.5</strong> 需補繳（目前約 $--）
+    <strong>📉 0050 質押維持率</strong>：借款 $146 萬，29,000 股。維持率下限 130% → 股價低於 <strong>$65.5</strong> 需補繳（目前 <span id="p0050Now">$--</span>）
   </div>
 </div>
 
@@ -227,7 +227,7 @@ function calc(){
 
   // 0050 維持率
   const p0050 = data.prices['0050']||120;
-  document.querySelector('.alert-red strong:last-child').textContent='$65.5 需補繳（目前 $'+p0050+')';
+  document.getElementById('p0050Now').textContent='$'+p0050;
 
   // 圖表
   drawCharts(totalAssets,totalDebts,stockVal,reVal);

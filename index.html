@@ -167,7 +167,7 @@ function render(){
   const yearsToFire=firePct>0?Math.round((annualExpense-passiveIncome)/(passiveIncome||1)*10)/10:'--';
 
   // 現金流
-  const loanTotalMonthly=LOANS.reduce((a,l)=>a+(l.monthly||0),0);
+  const loanTotalMonthly=LOANS.reduce((a,l)=>a+(l.isRevolving?0:(l.monthly||0)),0);
   const consumption=avgMonthlyExp-loanTotalMonthly; // 支出減還貸=純消費
   const netAfterAll=estIncome-avgMonthlyExp; // 收入-總支出=淨結餘
   const savingRate=estIncome>0?Math.round((estIncome-consumption)/estIncome*100):0;

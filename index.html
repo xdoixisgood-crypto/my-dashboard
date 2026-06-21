@@ -42,8 +42,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tbl td:first-child,.tbl th:first-child{text-align:left;color:#c9d1d9}
 .tbl .total{font-weight:700;border-top:1px solid #30363d}
 .tbl .total td{color:#f0f6fc}
-.canvas-wrap{position:relative;width:100%}
-.canvas-wrap canvas{width:100%!important;max-height:320px}
+.canvas-wrap{position:relative;width:100%;min-height:260px}
+.canvas-wrap canvas{width:100%!important;height:260px!important;max-height:320px}
 .footer{text-align:center;padding:20px;color:#484f58;font-size:10px}
 .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
 .badge-up{background:#1a3a1a;color:#3fb950}.badge-down{background:#3a1a1a;color:#f85149}
@@ -261,6 +261,7 @@ function render(){
   <div class="col card">
     <h2>📊 上半年實際支出</h2>
     <div class="canvas-wrap"><canvas id="chartActExp"></canvas></div>
+    <div id="actExpSummary" style="margin-top:8px;font-size:11px;color:#8b949e;text-align:center"></div>
   </div>
 </div>
 
@@ -369,24 +370,47 @@ function drawCharts(netWorth,stockValTWD,reVal,totalAssets){
   const expKeys=['dining','shopping','entertainment','transport','cash','housing','other'];
   const expColors={'dining':'#58a6ff','shopping':'#d29922','entertainment':'#3fb950','transport':'#8b949e','cash':'#f85149','housing':'#bc8cff','other':'#484f58'};
   const expLabels={'dining':'餐飲','shopping':'購物','entertainment':'娛樂','transport':'交通','cash':'現金','housing':'住家','other':'其他'};
-  new Chart(document.getElementById('chartActExp'),{
-    type:'bar',
-    data:{
-      labels:months,
-      datasets:expKeys.map(k=>({
-        label:expLabels[k],
-        data:ACTUAL_EXPENSES.map(e=>e[k]||0),
-        backgroundColor:expColors[k]
-      }))
-    },
-    options:{
-      plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',font:{size:10},padding:8,boxWidth:10}}},
-      scales:{
-        x:{stacked:true,ticks:{color:'#8b949e',font:{size:10}},grid:{display:false}},
-        y:{stacked:true,ticks:{color:'#8b949e',callback:v=>v/10000+'萬'},grid:{color:'#21262d'}}
+
+  // 文字摘要（圖表備援）
+  const summary=document.getElementById('actExpSummary');
+  if(summary){
+    const totals=ACTUAL_EXPENSES.map(m=>{
+      let s=0; for(const k of expKeys) s+=m[k]||0; return s;
+    });
+    const maxT=Math.max(...totals);
+    summary.innerHTML=ACTUAL_EXPENSES.map((m,i)=>{
+      const t=totals[i]; const pct=maxT>0?(t/maxT*100).toFixed(0):0;
+      return '<span style="margin:0 6px"><b>'+m.month+'</b> $'+fmtM(t)+' <span class="dim">'+pct+'%</span></span>';
+    }).join('│');
+  }
+
+  try{
+    const canv=document.getElementById('chartActExp');
+    if(!canv) throw new Error('canvas not found');
+    new Chart(canv,{
+      type:'bar',
+      data:{
+        labels:months,
+        datasets:expKeys.map(k=>({
+          label:expLabels[k],
+          data:ACTUAL_EXPENSES.map(e=>{
+            const v=e[k]; return typeof v==='number'?v:0;
+          }),
+          backgroundColor:expColors[k]
+        }))
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',font:{size:10},padding:8,boxWidth:10}}},
+        scales:{
+          x:{stacked:true,ticks:{color:'#8b949e',font:{size:10}},grid:{display:false}},
+          y:{stacked:true,ticks:{color:'#8b949e',callback:v=>v/10000+'萬'},grid:{color:'#21262d'}}
+        }
       }
-    }
-  });
+    });
+  }catch(err){
+    if(summary) summary.innerHTML='<span style="color:#f85149">⚠ 圖表載入失敗，上方為文字摘要</span> '+summary.innerHTML;
+  }
 }
 
 init();

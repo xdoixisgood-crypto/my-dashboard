@@ -42,8 +42,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tbl td:first-child,.tbl th:first-child{text-align:left;color:#c9d1d9}
 .tbl .total{font-weight:700;border-top:1px solid #30363d}
 .tbl .total td{color:#f0f6fc}
-.canvas-wrap{position:relative;width:100%;min-height:260px}
-.canvas-wrap canvas{width:100%!important;height:260px!important;max-height:320px}
+.canvas-wrap{position:relative;width:100%;min-height:300px}
+.canvas-wrap canvas{width:100%!important;height:340px!important;max-height:400px}
 .footer{text-align:center;padding:20px;color:#484f58;font-size:10px}
 .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
 .badge-up{background:#1a3a1a;color:#3fb950}.badge-down{background:#3a1a1a;color:#f85149}
@@ -249,20 +249,18 @@ function render(){
 </div>
 
 <!-- 支出 -->
-<div class="row">
-  <div class="col card">
-    <h2>🧾 每月固定支出</h2>
-    <div class="canvas-wrap"><canvas id="chartFixExp"></canvas></div>
-    <div style="text-align:center;margin-top:8px;font-size:13px;color:#f0f6fc">
-      月固定 <strong>$${fmtM(FIXED_EXPENSES.reduce((a,e)=>a+e.amt,0))}</strong>
+<div class="card">
+  <h2>🧾 每月固定支出</h2>
+  <div class="canvas-wrap"><canvas id="chartFixExp"></canvas></div>
+  <div style="text-align:center;margin-top:8px;font-size:13px;color:#f0f6fc">
+    月固定 <strong>$${fmtM(FIXED_EXPENSES.reduce((a,e)=>a+e.amt,0))}</strong>
       <span class="dim" style="font-size:11px">（不含變動消費）</span>
     </div>
   </div>
-  <div class="col card">
+<div class="card">
     <h2>📊 上半年實際支出</h2>
     <div class="canvas-wrap"><canvas id="chartActExp"></canvas></div>
     <div id="actExpSummary" style="margin-top:8px;font-size:11px;color:#8b949e;text-align:center"></div>
-  </div>
 </div>
 
 <!-- 0050 股息 -->

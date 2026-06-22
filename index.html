@@ -123,7 +123,7 @@ let DATA={prices:{},exchangeRate:31.67,netWorthHistory:[],lastUpdated:''};
 // ==== 載入 ====
 async function init(){
   try{
-    const r=await fetch('data.json');
+    const r=await fetch('data.json?v='+Date.now());
     if(r.ok) DATA=await r.json();
   }catch(e){}
   render();

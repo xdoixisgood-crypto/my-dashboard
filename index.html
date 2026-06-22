@@ -172,6 +172,18 @@ function render(){
   const netAfterAll=estIncome-avgMonthlyExp; // 收入-總支出=淨結餘
   const savingRate=estIncome>0?Math.round((estIncome-consumption)/estIncome*100):0;
 
+  // ⚖️ 曝險與槓桿
+  const exposurePct=netWorth>0?Math.round(stockValTWD/netWorth*100):0;
+  const leverageX=netWorth>0?(totalDebts/netWorth).toFixed(1):'--';
+  const pledge0050Val=29000*(p['0050']||107.30);
+  const pledgePct=Math.round(1460000/pledge0050Val*100);
+  const pledgeRatio=Math.round(pledge0050Val/1460000*100);
+  const nuclearVal=267*(p['LEU']||191.39)*fx + 155*(p['XE']||21.56)*fx;
+  const nuclearPct=stockValTWD>0?Math.round(nuclearVal/stockValTWD*100):0;
+  const twPct=stockValTWD>0?Math.round(pledge0050Val/stockValTWD*100):0;
+  const leverageColor=parseFloat(leverageX)>3?'#f85149':parseFloat(leverageX)>2?'#d29922':'#3fb950';
+  const exposureColor=exposurePct>200?'#f85149':exposurePct>150?'#d29922':'#3fb950';
+
   const now=new Date();
   const graceLeft=LOANS[1].graceMonths ? LOANS[1].graceMonths-LOANS[1].elapsed : 0;
 
@@ -355,6 +367,35 @@ function render(){
         <br><span class="dim">※ 還貸雖是現金流出但同時減少負債，淨值不變。股票漲幅另計。</span>
       </div>
     </div>
+
+	<!-- 曝險與槓桿 -->
+	<div class="card" style="margin-top:0">
+	  <h2>⚖️ 曝險與槓桿</h2>
+	  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+	    <div class="metric"><div class="val" style="color:${exposureColor}">${exposurePct}%</div><div class="lbl">股市曝險／淨值</div></div>
+	    <div class="metric"><div class="val" style="color:${leverageColor}">${leverageX}×</div><div class="lbl">槓桿倍數（負債／淨值）</div></div>
+	    <div class="metric"><div class="val" style="color:${pledgeRatio>=200?'#3fb950':pledgeRatio>=150?'#d29922':'#f85149'}">${pledgeRatio}%</div><div class="lbl">0050 質押維持率</div></div>
+	    <div class="metric"><div class="val" style="color:#d29922">${pledgePct}%</div><div class="lbl">0050 已質押比例</div></div>
+	  </div>
+	  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262d">
+	    <div style="font-size:12px;color:#c9d1d9;display:flex;justify-content:space-between;margin-bottom:6px">
+	      <span>📊 集中度</span>
+	      <span><span style="color:#58a6ff">台股 0050 ${twPct}%</span>｜<span style="color:#d29922">核能 ${nuclearPct}%</span></span>
+	    </div>
+	    <div class="bar-wrap" style="height:10px;display:flex">
+	      <div class="bar-fill bb" style="width:${twPct}%;border-radius:4px 0 0 4px" title="0050 台股"></div>
+	      <div class="bar-fill by" style="width:${nuclearPct}%" title="核能 LEU+XE"></div>
+	    </div>
+	    <div style="font-size:10px;color:#8b949e;margin-top:4px">
+	      總持股 $${fmtW(stockValTWD)}｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(267*(p['LEU']||191.39)*fx)} + XE $${fmtW(155*(p['XE']||21.56)*fx)}）
+	    </div>
+	  </div>
+	  <div style="margin-top:10px;font-size:11px;color:#8b949e;text-align:center">
+	    <span>${exposurePct>150?'⚠️ 曝險偏高，股市下跌衝擊淨值幅度較大':'✅ 曝險尚在可控範圍'}｜</span>
+	    <span>${parseFloat(leverageX)>2?'⚠️ 槓桿偏高，負債為淨值 '+leverageX+' 倍':parseFloat(leverageX)>1?'⚡ 有槓桿但尚可':'✅ 槓桿低'}｜</span>
+	    <span>${pledgeRatio<150?'🔴 0050 維持率偏低，接近追繳線':pledgeRatio<200?'🟡 0050 維持率尚可，注意回檔':'🟢 0050 維持率安全'}</span>
+	  </div>
+	</div>
 
 <!-- 提醒 -->
 <div class="card">

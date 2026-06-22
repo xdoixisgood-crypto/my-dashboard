@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>戰鬥陀螺熱度追蹤</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f1117;color:#e1e4e8;min-height:100vh;padding-bottom:40px}
+.header{background:#161b22;border-bottom:1px solid #30363d;padding:16px;position:sticky;top:0;z-index:10}
+.header h1{font-size:20px;font-weight:600;color:#58a6ff}
+.header .sub{font-size:11px;color:#8b949e;margin-top:2px}
+.container{max-width:1100px;margin:0 auto;padding:12px}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:16px;margin-bottom:12px}
+.card h2{font-size:15px;font-weight:600;margin-bottom:12px;color:#f0f6fc}
+.canvas-wrap{position:relative;width:100%}
+.canvas-wrap canvas{width:100%!important;height:360px!important;max-height:450px}
+.footer{text-align:center;padding:20px;color:#484f58;font-size:10px}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th,.tbl td{padding:8px 10px;text-align:right;border-bottom:1px solid #21262d}
+.tbl th{color:#8b949e;font-weight:500;font-size:11px}
+.tbl td:first-child,.tbl th:first-child{text-align:left;color:#f0f6fc;font-weight:500}
+.tbl .hot{color:#f85149;font-weight:600}
+.tbl .warm{color:#d29922;font-weight:600}
+.tbl .cool{color:#8b949e}
+.filter-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.filter-btn{padding:4px 12px;border-radius:14px;border:1px solid #30363d;background:#21262d;color:#c9d1d9;font-size:12px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.filter-btn:hover{background:#30363d}
+.filter-btn.active{background:#1f3a5f;border-color:#58a6ff;color:#58a6ff}
+.tab-bar{display:flex;gap:0;margin-bottom:12px;border-bottom:2px solid #21262d}
+.tab-btn{padding:6px 16px;font-size:13px;color:#8b949e;cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.15s}
+.tab-btn:hover{color:#c9d1d9}
+.tab-btn.active{color:#58a6ff;border-bottom-color:#58a6ff}
+.legend-inline{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:11px;color:#8b949e}
+.legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:4px}
+.back-link{color:#58a6ff;font-size:13px;text-decoration:none;display:inline-block;margin-bottom:8px}
+.back-link:hover{text-decoration:underline}
+.loading{text-align:center;padding:40px;color:#8b949e;font-size:14px}
+@media(max-width:767px){
+  .tbl{font-size:11px}
+  .tbl th,.tbl td{padding:6px 5px}
+  .canvas-wrap canvas{height:280px!important}
+  .filter-btn{font-size:11px;padding:3px 10px}
+  .tab-btn{font-size:12px;padding:5px 10px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="index.html" class="back-link">← 回儀表板</a>
+  <h1>🪀 戰鬥陀螺熱度追蹤</h1>
+  <div class="sub">最後更新：<span id="updateTime">載入中…</span>｜資料來源：CubeLV 自動搜集</div>
+</div>
+
+<div class="container" id="app"><div class="loading">⏳ 載入資料中…</div></div>
+<div class="footer">由 CubeLV AI 自動產生｜每週更新｜<span id="footerVer"></span></div>
+
+<script>
+const SERIES_COLORS=[
+  '#58a6ff','#3fb950','#d29922','#f85149','#bc8cff',
+  '#79c0ff','#56d364','#e3b341','#ff7b72','#d2a8ff'
+];
+let ALL_DATA=[],SERIES_NAMES=[],charts=[];
+function fmtN(v){return v?.toLocaleString()||'--'}
+function fmt$(v){return v?'NT$'+v.toLocaleString():'-'}
+function heatClass(s){return s>=70?'hot':s>=40?'warm':'cool'}
+
+async function init(){
+  try{
+    const r=await fetch('beyblade-data.json?v='+Date.now());
+    if(r.ok){
+      const j=await r.json();
+      ALL_DATA=j.data||[]; SERIES_NAMES=j.series||[];
+      document.getElementById('updateTime').textContent=
+        j.lastUpdated?new Date(j.lastUpdated).toLocaleString('zh-TW'):'手動更新';
+    }
+  }catch(e){}
+  document.getElementById('footerVer').textContent=
+    '數據筆數 '+ALL_DATA.length+'｜'+new Date().toLocaleDateString('zh-TW');
+  render();
+}
+
+function render(){
+  if(!ALL_DATA.length){document.getElementById('app').innerHTML='<div class="loading">尚無數據</div>';return}
+  const el=document.getElementById('app');
+  const dates=[...new Set(ALL_DATA.map(d=>d.date))].sort();
+  const latestDate=dates[dates.length-1];
+  const latestData=ALL_DATA.filter(d=>d.date===latestDate).sort((a,b)=>b.googleTrendScore-a.googleTrendScore);
+
+  el.innerHTML=
+    '<div class="card"><h2>📊 最新一週摘要（'+latestDate+'）</h2><div style="overflow-x:auto"><table class="tbl"><thead><tr>'+
+    '<th>系列</th><th>Google 熱度</th><th>社群討論</th><th>平均價格</th><th>最低價</th><th>最高價</th><th>刊登數</th>'+
+    '</tr></thead><tbody>'+
+    latestData.map((d,i)=>{
+      const cls=heatClass(d.googleTrendScore);
+      return '<tr><td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+
+        SERIES_COLORS[i%10]+';margin-right:6px;vertical-align:middle"></span>'+d.series+'</td>'+
+        '<td class="'+cls+'">'+(d.googleTrendScore||'-')+'</td>'+
+        '<td>'+fmtN(d.socialMentionCount)+'</td><td>'+fmt$(d.avgPrice)+'</td>'+
+        '<td>'+fmt$(d.minPrice)+'</td><td>'+fmt$(d.maxPrice)+'</td><td>'+fmtN(d.listingCount)+'</td></tr>';
+    }).join('')+
+    '</tbody></table></div><div class="legend-inline">🔴 熱門(≥70) 🟡 中等(≥40) ⚪ 冷門(&lt;40)</div></div>'+
+
+    '<div class="card"><h2>📈 趨勢圖表</h2>'+
+    '<div class="filter-bar" id="filterBar"><button class="filter-btn active" data-series="all">全部</button>'+
+    SERIES_NAMES.map((s,i)=>'<button class="filter-btn" data-series="'+s+'" style="border-left:3px solid '+SERIES_COLORS[i%10]+'">'+s+'</button>').join('')+
+    '</div>'+
+    '<div class="tab-bar" id="tabBar">'+
+    '<button class="tab-btn active" data-tab="google">Google 熱度</button>'+
+    '<button class="tab-btn" data-tab="price">平均價格</button>'+
+    '<button class="tab-btn" data-tab="social">社群討論</button>'+
+    '<button class="tab-btn" data-tab="listing">刊登數量</button>'+
+    '</div>'+
+    '<div class="canvas-wrap"><canvas id="chartMain"></canvas></div></div>'+
+
+    '<div class="card"><h2>📋 歷史數據明細</h2><div style="overflow-x:auto"><table class="tbl" style="font-size:12px"><thead><tr>'+
+    '<th>系列</th><th>日期</th><th>Google 熱度</th><th>社群討論</th><th>平均價格</th><th>最低價</th><th>最高價</th><th>刊登數</th>'+
+    '</tr></thead><tbody>'+
+    ALL_DATA.map(d=>{
+      const cls=heatClass(d.googleTrendScore);
+      return '<tr><td>'+d.series+'</td><td>'+d.date+'</td><td class="'+cls+'">'+(d.googleTrendScore||'-')+'</td>'+
+        '<td>'+fmtN(d.socialMentionCount)+'</td><td>'+fmt$(d.avgPrice)+'</td>'+
+        '<td>'+fmt$(d.minPrice)+'</td><td>'+fmt$(d.maxPrice)+'</td><td>'+fmtN(d.listingCount)+'</td></tr>';
+    }).join('')+
+    '</tbody></table></div></div>';
+
+  let selectedSeries='all',selectedTab='google';
+
+  document.getElementById('filterBar').addEventListener('click',e=>{
+    if(!e.target.classList.contains('filter-btn'))return;
+    document.querySelectorAll('#filterBar .filter-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    selectedSeries=e.target.dataset.series;
+    drawChart(selectedSeries,selectedTab);
+  });
+  document.getElementById('tabBar').addEventListener('click',e=>{
+    if(!e.target.classList.contains('tab-btn'))return;
+    document.querySelectorAll('#tabBar .tab-btn').forEach(b=>b.classList.remove('active'));
+    e.target.classList.add('active');
+    selectedTab=e.target.dataset.tab;
+    drawChart(selectedSeries,selectedTab);
+  });
+  drawChart('all','google');
+}
+
+function drawChart(seriesName,tab){
+  charts.forEach(c=>c.destroy()); charts=[];
+  const ctx=document.getElementById('chartMain'); if(!ctx)return;
+
+  let filtered=seriesName==='all'?ALL_DATA:ALL_DATA.filter(d=>d.series===seriesName);
+  if(!filtered.length)return;
+
+  const dates=[...new Set(filtered.map(d=>d.date))].sort();
+  const fieldMap={
+    google:{key:'googleTrendScore',label:'Google 搜尋熱度',color:'#58a6ff',fmt:v=>v},
+    price:{key:'avgPrice',label:'平均售價 (NTD)',color:'#f85149',fmt:v=>'NT$'+v.toLocaleString()},
+    social:{key:'socialMentionCount',label:'社群討論篇數',color:'#bc8cff',fmt:v=>v},
+    listing:{key:'listingCount',label:'刊登數量',color:'#3fb950',fmt:v=>v}
+  };
+  const field=fieldMap[tab]||fieldMap.google;
+
+  if(seriesName==='all'){
+    const datasets=SERIES_NAMES.map((s,i)=>{
+      const dm={}; filtered.filter(d=>d.series===s).forEach(d=>{dm[d.date]=d[field.key]||0});
+      return {
+        label:s,data:dates.map(d=>dm[d]??null),
+        borderColor:SERIES_COLORS[i%10],backgroundColor:SERIES_COLORS[i%10]+'20',
+        fill:false,tension:0.3,pointRadius:3,pointBackgroundColor:SERIES_COLORS[i%10],spanGaps:true
+      };
+    });
+    const c=new Chart(ctx,{type:'line',data:{labels:dates,datasets},options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'bottom',labels:{color:'#c9d1d9',font:{size:11},padding:8,boxWidth:10,usePointStyle:true}}},
+      scales:{x:{ticks:{color:'#8b949e',maxTicksLimit:12,font:{size:10}},grid:{color:'#21262d'}},
+              y:{ticks:{color:'#8b949e',callback:field.fmt},grid:{color:'#21262d'}}}
+    }}); charts.push(c);
+  }else{
+    const values=dates.map(d=>{const pt=filtered.find(p=>p.date===d);return pt?(pt[field.key]||0):null});
+    const c=new Chart(ctx,{type:'line',data:{labels:dates,datasets:[{
+      label:seriesName+' · '+field.label,data:values,
+      borderColor:field.color,backgroundColor:field.color+'40',fill:true,
+      tension:0.3,pointRadius:4,pointBackgroundColor:field.color,spanGaps:true
+    }]},options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#8b949e',maxTicksLimit:14,font:{size:10}},grid:{color:'#21262d'}},
+              y:{ticks:{color:'#8b949e',callback:field.fmt},grid:{color:'#21262d'}}}
+    }}); charts.push(c);
+  }
+}
+init();
+</script>
+</body>
+</html>

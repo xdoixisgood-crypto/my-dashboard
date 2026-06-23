@@ -7,6 +7,12 @@
     "DRAM": 76.71,
     "XE": 21.56
   },
+  "holdings": [
+    { "symbol": "0050", "shares": 29000, "costPrice": 53, "market": "台股", "currency": "TWD" },
+    { "symbol": "LEU",   "shares": 267,   "costPrice": 231, "market": "美股", "currency": "USD" },
+    { "symbol": "XE",    "shares": 155,   "costPrice": 31,  "market": "美股", "currency": "USD" },
+    { "symbol": "DRAM",  "shares": 38,    "costPrice": 80.33, "market": "美股", "currency": "USD" }
+  ],
   "netWorthHistory": [
     {
       "date": "2026-01-31",

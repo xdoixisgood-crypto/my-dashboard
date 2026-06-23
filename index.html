@@ -87,12 +87,13 @@ const fmtN = (v)=> 'NT$'+v.toLocaleString();
 const fmtM = (v)=> v.toLocaleString();
 const fmtPct = (v)=> (v>=0?'+':'')+v.toFixed(1)+'%';
 
-const STOCKS = [
+const STOCKS_DEFAULT = [
   {symbol:'0050',shares:29000,costPrice:53,market:'台股',currency:'TWD'},
   {symbol:'LEU',shares:267,costPrice:231,market:'美股',currency:'USD'},
   {symbol:'XE',shares:155,costPrice:31,market:'美股',currency:'USD'},
   {symbol:'DRAM',shares:38,costPrice:80.33,market:'美股',currency:'USD'},
 ];
+let STOCKS = STOCKS_DEFAULT;
 
 const LOANS = [
   {name:'新竹原房貸',amount:2162146,monthly:9793,rate:'2.52%',start:'2026-01',totalMonths:360,elapsed:297,day:10},
@@ -130,6 +131,7 @@ async function init(){
     const r=await fetch('data.json?v='+Date.now());
     if(r.ok) DATA=await r.json();
   }catch(e){}
+  if(DATA.holdings && DATA.holdings.length>0) STOCKS = DATA.holdings;
   render();
 }
 function render(){
@@ -137,6 +139,12 @@ function render(){
   const p=DATA.prices||{};
   const fx=FX();
   const dr=DATA.exchangeRate||31.67;
+
+  // 從 STOCKS 讀取各股數（支援 data.json 動態持股）
+  const sh0050 = STOCKS.find(s=>s.symbol==='0050')?.shares || 29000;
+  const shLEU   = STOCKS.find(s=>s.symbol==='LEU')?.shares   || 267;
+  const shXE    = STOCKS.find(s=>s.symbol==='XE')?.shares    || 155;
+  const shDRAM  = STOCKS.find(s=>s.symbol==='DRAM')?.shares  || 38;
 
   // 計算
   let stockValTWD=0, stockCostTWD=0;
@@ -165,7 +173,7 @@ function render(){
   const monthlyFreeAfterLoans=mortgageMonthly+22002;
 
   // FIRE
-  const passiveIncome=Math.round(29000*3.6);
+  const passiveIncome=Math.round(sh0050*3.6);
   const annualExpense=avgMonthlyExp*12;
   const firePct=Math.min(100,Math.round(passiveIncome/annualExpense*100));
   const yearsToFire=firePct>0?Math.round((annualExpense-passiveIncome)/(passiveIncome||1)*10)/10:'--';
@@ -179,11 +187,11 @@ function render(){
   // ⚖️ 曝險與槓桿
   const exposurePct=netWorth>0?Math.round(stockValTWD/netWorth*100):0;
   const leverageX=netWorth>0?(totalDebts/netWorth).toFixed(1):'--';
-  const pledge0050Val=29000*(p['0050']||107.30);
+  const pledge0050Val=sh0050*(p['0050']||107.30);
   const pledgePct=Math.round(1460000/pledge0050Val*100);
   const pledgeRatio=Math.round(pledge0050Val/1460000*100);
-  const nuclearVal=267*(p['LEU']||191.39)*fx + 155*(p['XE']||21.56)*fx;
-  const dramVal=38*(p['DRAM']||76.71)*fx;
+  const nuclearVal=shLEU*(p['LEU']||191.39)*fx + shXE*(p['XE']||21.56)*fx;
+  const dramVal=shDRAM*(p['DRAM']||76.71)*fx;
   const nuclearPct=stockValTWD>0?Math.round(nuclearVal/stockValTWD*100):0;
   const dramPct=stockValTWD>0?Math.round(dramVal/stockValTWD*100):0;
   const twPct=stockValTWD>0?Math.round(pledge0050Val/stockValTWD*100):0;
@@ -393,7 +401,7 @@ function render(){
 	      <div class="bar-fill by" style="width:${nuclearPct}%" title="核能 LEU+XE"></div>
 	    </div>
 	    <div style="font-size:10px;color:#8b949e;margin-top:4px">
-	      總持股 $${fmtW(stockValTWD)}｜DRAM $${fmtW(dramVal)}（38股）｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(267*(p['LEU']||191.39)*fx)} + XE $${fmtW(155*(p['XE']||21.56)*fx)}）
+	      總持股 $${fmtW(stockValTWD)}｜DRAM $${fmtW(dramVal)}（${shDRAM}股）｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(shLEU*(p['LEU']||191.39)*fx)} + XE $${fmtW(shXE*(p['XE']||21.56)*fx)}）
 	    </div>
 	  </div>
 	  <div style="margin-top:10px;font-size:11px;color:#8b949e;text-align:center">

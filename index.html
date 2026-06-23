@@ -91,6 +91,7 @@ const STOCKS = [
   {symbol:'0050',shares:29000,costPrice:53,market:'台股',currency:'TWD'},
   {symbol:'LEU',shares:267,costPrice:231,market:'美股',currency:'USD'},
   {symbol:'XE',shares:155,costPrice:31,market:'美股',currency:'USD'},
+  {symbol:'DRAM',shares:38,costPrice:80.33,market:'美股',currency:'USD'},
 ];
 
 const LOANS = [
@@ -182,7 +183,9 @@ function render(){
   const pledgePct=Math.round(1460000/pledge0050Val*100);
   const pledgeRatio=Math.round(pledge0050Val/1460000*100);
   const nuclearVal=267*(p['LEU']||191.39)*fx + 155*(p['XE']||21.56)*fx;
+  const dramVal=38*(p['DRAM']||76.71)*fx;
   const nuclearPct=stockValTWD>0?Math.round(nuclearVal/stockValTWD*100):0;
+  const dramPct=stockValTWD>0?Math.round(dramVal/stockValTWD*100):0;
   const twPct=stockValTWD>0?Math.round(pledge0050Val/stockValTWD*100):0;
   const leverageColor=parseFloat(leverageX)>3?'#f85149':parseFloat(leverageX)>2?'#d29922':'#3fb950';
   const exposureColor=exposurePct>200?'#f85149':exposurePct>150?'#d29922':'#3fb950';
@@ -383,14 +386,14 @@ function render(){
 	  <div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262d">
 	    <div style="font-size:12px;color:#c9d1d9;display:flex;justify-content:space-between;margin-bottom:6px">
 	      <span>📊 集中度</span>
-	      <span><span style="color:#58a6ff">台股 0050 ${twPct}%</span>｜<span style="color:#d29922">核能 ${nuclearPct}%</span></span>
+	      <span><span style="color:#58a6ff">台股 0050 ${twPct}%</span>｜<span style="color:#f0883e">DRAM ${dramPct}%</span>｜<span style="color:#d29922">核能 ${nuclearPct}%</span></span>
 	    </div>
 	    <div class="bar-wrap" style="height:10px;display:flex">
 	      <div class="bar-fill bb" style="width:${twPct}%;border-radius:4px 0 0 4px" title="0050 台股"></div>
 	      <div class="bar-fill by" style="width:${nuclearPct}%" title="核能 LEU+XE"></div>
 	    </div>
 	    <div style="font-size:10px;color:#8b949e;margin-top:4px">
-	      總持股 $${fmtW(stockValTWD)}｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(267*(p['LEU']||191.39)*fx)} + XE $${fmtW(155*(p['XE']||21.56)*fx)}）
+	      總持股 $${fmtW(stockValTWD)}｜DRAM $${fmtW(dramVal)}（38股）｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(267*(p['LEU']||191.39)*fx)} + XE $${fmtW(155*(p['XE']||21.56)*fx)}）
 	    </div>
 	  </div>
 	  <div style="margin-top:10px;font-size:11px;color:#8b949e;text-align:center">

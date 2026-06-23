@@ -90,7 +90,6 @@ const fmtPct = (v)=> (v>=0?'+':'')+v.toFixed(1)+'%';
 const STOCKS_DEFAULT = [
   {symbol:'0050',shares:29000,costPrice:53,market:'台股',currency:'TWD'},
   {symbol:'LEU',shares:267,costPrice:231,market:'美股',currency:'USD'},
-  {symbol:'XE',shares:155,costPrice:31,market:'美股',currency:'USD'},
   {symbol:'DRAM',shares:38,costPrice:80.33,market:'美股',currency:'USD'},
 ];
 let STOCKS = STOCKS_DEFAULT;
@@ -143,7 +142,6 @@ function render(){
   // 從 STOCKS 讀取各股數（支援 data.json 動態持股）
   const sh0050 = STOCKS.find(s=>s.symbol==='0050')?.shares || 29000;
   const shLEU   = STOCKS.find(s=>s.symbol==='LEU')?.shares   || 267;
-  const shXE    = STOCKS.find(s=>s.symbol==='XE')?.shares    || 155;
   const shDRAM  = STOCKS.find(s=>s.symbol==='DRAM')?.shares  || 38;
 
   // 計算
@@ -190,7 +188,7 @@ function render(){
   const pledge0050Val=sh0050*(p['0050']||107.30);
   const pledgePct=Math.round(1460000/pledge0050Val*100);
   const pledgeRatio=Math.round(pledge0050Val/1460000*100);
-  const nuclearVal=shLEU*(p['LEU']||191.39)*fx + shXE*(p['XE']||21.56)*fx;
+  const nuclearVal=shLEU*(p['LEU']||191.39)*fx;
   const dramVal=shDRAM*(p['DRAM']||76.71)*fx;
   const nuclearPct=stockValTWD>0?Math.round(nuclearVal/stockValTWD*100):0;
   const dramPct=stockValTWD>0?Math.round(dramVal/stockValTWD*100):0;
@@ -398,10 +396,10 @@ function render(){
 	    </div>
 	    <div class="bar-wrap" style="height:10px;display:flex">
 	      <div class="bar-fill bb" style="width:${twPct}%;border-radius:4px 0 0 4px" title="0050 台股"></div>
-	      <div class="bar-fill by" style="width:${nuclearPct}%" title="核能 LEU+XE"></div>
+	      <div class="bar-fill by" style="width:${nuclearPct}%" title="核能 LEU"></div>
 	    </div>
 	    <div style="font-size:10px;color:#8b949e;margin-top:4px">
-	      總持股 $${fmtW(stockValTWD)}｜DRAM $${fmtW(dramVal)}（${shDRAM}股）｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(shLEU*(p['LEU']||191.39)*fx)} + XE $${fmtW(shXE*(p['XE']||21.56)*fx)}）
+	      總持股 $${fmtW(stockValTWD)}｜DRAM $${fmtW(dramVal)}（${shDRAM}股）｜核能部位 $${fmtW(nuclearVal)}（LEU $${fmtW(shLEU*(p['LEU']||191.39)*fx)}）
 	    </div>
 	  </div>
 	  <div style="margin-top:10px;font-size:11px;color:#8b949e;text-align:center">

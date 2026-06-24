@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-06-23T16:42:01+08:00",
+  "lastUpdated": "2026-06-24T14:57:28.931937+08:00",
   "series": [
     "BX-04",
     "BX-49",
@@ -114,6 +114,16 @@
       "listingCount": 65
     },
     {
+      "series": "BX-04",
+      "date": "2026/06/24",
+      "googleTrendScore": 15,
+      "socialMentionCount": 2,
+      "avgPrice": 666,
+      "minPrice": 392,
+      "maxPrice": 990,
+      "listingCount": 65
+    },
+    {
       "series": "BX-49",
       "date": "2026/01/05",
       "googleTrendScore": 55,
@@ -214,6 +224,16 @@
       "listingCount": 200
     },
     {
+      "series": "BX-49",
+      "date": "2026/06/24",
+      "googleTrendScore": 85,
+      "socialMentionCount": 15,
+      "avgPrice": 1480,
+      "minPrice": 880,
+      "maxPrice": 1980,
+      "listingCount": 180
+    },
+    {
       "series": "BXG-21",
       "date": "2026/04/05",
       "googleTrendScore": 80,
@@ -281,6 +301,16 @@
       "avgPrice": 848,
       "minPrice": 600,
       "maxPrice": 1298,
+      "listingCount": 185
+    },
+    {
+      "series": "BXG-21",
+      "date": "2026/06/24",
+      "googleTrendScore": 90,
+      "socialMentionCount": 15,
+      "avgPrice": 1134,
+      "minPrice": 799,
+      "maxPrice": 1959,
       "listingCount": 185
     },
     {
@@ -378,10 +408,20 @@
       "date": "2026/06/23",
       "googleTrendScore": 10,
       "socialMentionCount": 5,
-      "avgPrice": 0,
-      "minPrice": 0,
-      "maxPrice": 0,
-      "listingCount": 0
+      "avgPrice": null,
+      "minPrice": null,
+      "maxPrice": null,
+      "listingCount": null
+    },
+    {
+      "series": "Beyblade Burst",
+      "date": "2026/06/24",
+      "googleTrendScore": 5,
+      "socialMentionCount": 1,
+      "avgPrice": 300,
+      "minPrice": 100,
+      "maxPrice": 500,
+      "listingCount": 5
     },
     {
       "series": "Beyblade X",
@@ -478,10 +518,20 @@
       "date": "2026/06/23",
       "googleTrendScore": 70,
       "socialMentionCount": 50,
-      "avgPrice": 0,
-      "minPrice": 0,
-      "maxPrice": 0,
-      "listingCount": 0
+      "avgPrice": null,
+      "minPrice": null,
+      "maxPrice": null,
+      "listingCount": null
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/24",
+      "googleTrendScore": 92,
+      "socialMentionCount": 40,
+      "avgPrice": 1500,
+      "minPrice": 350,
+      "maxPrice": 5980,
+      "listingCount": 200
     },
     {
       "series": "CX-09",
@@ -581,6 +631,16 @@
       "avgPrice": 1158,
       "minPrice": 750,
       "maxPrice": 2080,
+      "listingCount": 85
+    },
+    {
+      "series": "CX-09",
+      "date": "2026/06/24",
+      "googleTrendScore": 20,
+      "socialMentionCount": 3,
+      "avgPrice": 963,
+      "minPrice": 550,
+      "maxPrice": 1280,
       "listingCount": 85
     },
     {
@@ -684,6 +744,16 @@
       "listingCount": 285
     },
     {
+      "series": "CX-11",
+      "date": "2026/06/24",
+      "googleTrendScore": 60,
+      "socialMentionCount": 6,
+      "avgPrice": 2276,
+      "minPrice": 975,
+      "maxPrice": 5230,
+      "listingCount": 285
+    },
+    {
       "series": "CX-16",
       "date": "2026/01/05",
       "googleTrendScore": 65,
@@ -784,6 +854,16 @@
       "listingCount": 95
     },
     {
+      "series": "CX-16",
+      "date": "2026/06/24",
+      "googleTrendScore": 75,
+      "socialMentionCount": 8,
+      "avgPrice": 3646,
+      "minPrice": 2990,
+      "maxPrice": 3980,
+      "listingCount": 95
+    },
+    {
       "series": "CX-18",
       "date": "2026/06/15",
       "googleTrendScore": 90,
@@ -812,6 +892,16 @@
       "minPrice": 950,
       "maxPrice": 1650,
       "listingCount": 270
+    },
+    {
+      "series": "CX-18",
+      "date": "2026/06/24",
+      "googleTrendScore": 95,
+      "socialMentionCount": 17,
+      "avgPrice": 1467,
+      "minPrice": 480,
+      "maxPrice": 1800,
+      "listingCount": 200
     },
     {
       "series": "UX-15",
@@ -911,6 +1001,16 @@
       "avgPrice": 1206,
       "minPrice": 790,
       "maxPrice": 2200,
+      "listingCount": 350
+    },
+    {
+      "series": "UX-15",
+      "date": "2026/06/24",
+      "googleTrendScore": 78,
+      "socialMentionCount": 9,
+      "avgPrice": 2187,
+      "minPrice": 790,
+      "maxPrice": 5980,
       "listingCount": 350
     }
   ]

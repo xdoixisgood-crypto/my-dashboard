@@ -1,8 +1,6 @@
 {
-  "lastUpdated": "2026-07-27T14:00:00+08:00",
+  "lastUpdated": "2026-07-30T14:06:00+08:00",
   "series": [
-    "BX-00",
-    "BX-04",
     "BX-49",
     "BXG-21",
     "Beyblade Burst",
@@ -13,399 +11,10 @@
     "CX-18",
     "UX-15",
     "UX-19",
-    "UX-20"
+    "UX-20",
+    "UX-21"
   ],
   "data": [
-    {
-      "series": "BX-00",
-      "date": "2026/06/30",
-      "googleTrendScore": 80,
-      "socialMentionCount": 18,
-      "avgPrice": 1880,
-      "minPrice": 530,
-      "maxPrice": 2560,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-00",
-      "date": "2026/06/30",
-      "googleTrendScore": 80,
-      "socialMentionCount": 18,
-      "avgPrice": 1880,
-      "minPrice": 530,
-      "maxPrice": 2560,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-00",
-      "date": "2026/06/30",
-      "googleTrendScore": 80,
-      "socialMentionCount": 18,
-      "avgPrice": 1880,
-      "minPrice": 530,
-      "maxPrice": 2560,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-00",
-      "date": "2026/06/30",
-      "googleTrendScore": 80,
-      "socialMentionCount": 18,
-      "avgPrice": 1880,
-      "minPrice": 530,
-      "maxPrice": 2560,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/01/05",
-      "googleTrendScore": 45,
-      "socialMentionCount": 5,
-      "avgPrice": 950,
-      "minPrice": 550,
-      "maxPrice": 1200,
-      "listingCount": 120
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/02/05",
-      "googleTrendScore": 42,
-      "socialMentionCount": 4,
-      "avgPrice": 900,
-      "minPrice": 500,
-      "maxPrice": 1150,
-      "listingCount": 110
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/03/05",
-      "googleTrendScore": 40,
-      "socialMentionCount": 4,
-      "avgPrice": 850,
-      "minPrice": 480,
-      "maxPrice": 1100,
-      "listingCount": 100
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/04/05",
-      "googleTrendScore": 38,
-      "socialMentionCount": 3,
-      "avgPrice": 820,
-      "minPrice": 450,
-      "maxPrice": 1080,
-      "listingCount": 90
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/05/25",
-      "googleTrendScore": 35,
-      "socialMentionCount": 3,
-      "avgPrice": 800,
-      "minPrice": 450,
-      "maxPrice": 1100,
-      "listingCount": 85
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/01",
-      "googleTrendScore": 38,
-      "socialMentionCount": 4,
-      "avgPrice": 760,
-      "minPrice": 420,
-      "maxPrice": 1080,
-      "listingCount": 78
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/08",
-      "googleTrendScore": 40,
-      "socialMentionCount": 4,
-      "avgPrice": 720,
-      "minPrice": 400,
-      "maxPrice": 1050,
-      "listingCount": 70
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/15",
-      "googleTrendScore": 42,
-      "socialMentionCount": 5,
-      "avgPrice": 700,
-      "minPrice": 395,
-      "maxPrice": 1050,
-      "listingCount": 65
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/22",
-      "googleTrendScore": 42,
-      "socialMentionCount": 5,
-      "avgPrice": 680,
-      "minPrice": 395,
-      "maxPrice": 1050,
-      "listingCount": 60
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/23",
-      "googleTrendScore": 15,
-      "socialMentionCount": 8,
-      "avgPrice": 708,
-      "minPrice": 392,
-      "maxPrice": 990,
-      "listingCount": 65
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/24",
-      "googleTrendScore": 15,
-      "socialMentionCount": 2,
-      "avgPrice": 666,
-      "minPrice": 392,
-      "maxPrice": 990,
-      "listingCount": 65
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/24",
-      "googleTrendScore": 30,
-      "socialMentionCount": 5,
-      "avgPrice": 666,
-      "minPrice": 392,
-      "maxPrice": 990,
-      "listingCount": 65
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/25",
-      "googleTrendScore": 15,
-      "socialMentionCount": 2,
-      "avgPrice": 670,
-      "minPrice": 280,
-      "maxPrice": 1290,
-      "listingCount": 60
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/25",
-      "googleTrendScore": 25,
-      "socialMentionCount": 5,
-      "avgPrice": 610,
-      "minPrice": 280,
-      "maxPrice": 999,
-      "listingCount": 60
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/26",
-      "googleTrendScore": 12,
-      "socialMentionCount": 3,
-      "avgPrice": 703,
-      "minPrice": 392,
-      "maxPrice": 1290,
-      "listingCount": 50
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/27",
-      "googleTrendScore": 8,
-      "socialMentionCount": 2,
-      "avgPrice": 703,
-      "minPrice": 392,
-      "maxPrice": 850,
-      "listingCount": 45
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/30",
-      "googleTrendScore": 15,
-      "socialMentionCount": 2,
-      "avgPrice": 671,
-      "minPrice": 392,
-      "maxPrice": 766,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/30",
-      "googleTrendScore": 15,
-      "socialMentionCount": 2,
-      "avgPrice": 671,
-      "minPrice": 392,
-      "maxPrice": 766,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/30",
-      "googleTrendScore": 15,
-      "socialMentionCount": 2,
-      "avgPrice": 671,
-      "minPrice": 392,
-      "maxPrice": 766,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-04",
-      "date": "2026/06/30",
-      "googleTrendScore": 15,
-      "socialMentionCount": 2,
-      "avgPrice": 671,
-      "minPrice": 392,
-      "maxPrice": 766,
-      "listingCount": 30
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/01/05",
-      "googleTrendScore": 55,
-      "socialMentionCount": 5,
-      "avgPrice": 2000,
-      "minPrice": 1200,
-      "maxPrice": 2500,
-      "listingCount": 300
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/02/05",
-      "googleTrendScore": 60,
-      "socialMentionCount": 6,
-      "avgPrice": 1900,
-      "minPrice": 1100,
-      "maxPrice": 2400,
-      "listingCount": 280
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/03/05",
-      "googleTrendScore": 65,
-      "socialMentionCount": 7,
-      "avgPrice": 1800,
-      "minPrice": 1000,
-      "maxPrice": 2250,
-      "listingCount": 260
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/04/05",
-      "googleTrendScore": 70,
-      "socialMentionCount": 8,
-      "avgPrice": 1700,
-      "minPrice": 900,
-      "maxPrice": 2150,
-      "listingCount": 240
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/05/25",
-      "googleTrendScore": 72,
-      "socialMentionCount": 7,
-      "avgPrice": 1680,
-      "minPrice": 850,
-      "maxPrice": 2100,
-      "listingCount": 220
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/01",
-      "googleTrendScore": 75,
-      "socialMentionCount": 8,
-      "avgPrice": 1580,
-      "minPrice": 800,
-      "maxPrice": 2050,
-      "listingCount": 230
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/08",
-      "googleTrendScore": 78,
-      "socialMentionCount": 9,
-      "avgPrice": 1480,
-      "minPrice": 700,
-      "maxPrice": 1950,
-      "listingCount": 215
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/15",
-      "googleTrendScore": 80,
-      "socialMentionCount": 10,
-      "avgPrice": 1380,
-      "minPrice": 650,
-      "maxPrice": 1750,
-      "listingCount": 210
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/22",
-      "googleTrendScore": 82,
-      "socialMentionCount": 10,
-      "avgPrice": 1309,
-      "minPrice": 600,
-      "maxPrice": 1680,
-      "listingCount": 200
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/23",
-      "googleTrendScore": 75,
-      "socialMentionCount": 25,
-      "avgPrice": 1357,
-      "minPrice": 850,
-      "maxPrice": 1680,
-      "listingCount": 200
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/24",
-      "googleTrendScore": 85,
-      "socialMentionCount": 28,
-      "avgPrice": 1334,
-      "minPrice": 880,
-      "maxPrice": 1499,
-      "listingCount": 180
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/24",
-      "googleTrendScore": 85,
-      "socialMentionCount": 15,
-      "avgPrice": 1480,
-      "minPrice": 880,
-      "maxPrice": 1980,
-      "listingCount": 180
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/25",
-      "googleTrendScore": 90,
-      "socialMentionCount": 12,
-      "avgPrice": 1352,
-      "minPrice": 880,
-      "maxPrice": 1680,
-      "listingCount": 170
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/25",
-      "googleTrendScore": 85,
-      "socialMentionCount": 60,
-      "avgPrice": 1370,
-      "minPrice": 880,
-      "maxPrice": 1680,
-      "listingCount": 170
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/26",
-      "googleTrendScore": 80,
-      "socialMentionCount": 25,
-      "avgPrice": 1453,
-      "minPrice": 880,
-      "maxPrice": 1680,
-      "listingCount": 155
-    },
     {
       "series": "BX-49",
       "date": "2026/06/27",
@@ -438,23 +47,13 @@
     },
     {
       "series": "BX-49",
-      "date": "2026/06/30",
-      "googleTrendScore": 95,
-      "socialMentionCount": 38,
-      "avgPrice": 1346,
-      "minPrice": 880,
-      "maxPrice": 1540,
-      "listingCount": 130
-    },
-    {
-      "series": "BX-49",
-      "date": "2026/06/30",
-      "googleTrendScore": 95,
-      "socialMentionCount": 38,
-      "avgPrice": 1346,
-      "minPrice": 880,
-      "maxPrice": 1540,
-      "listingCount": 130
+      "date": "2026/07/28",
+      "googleTrendScore": 85,
+      "socialMentionCount": 25,
+      "avgPrice": 1441,
+      "minPrice": 1250,
+      "maxPrice": 1680,
+      "listingCount": 110
     },
     {
       "series": "BXG-21",
@@ -625,6 +224,26 @@
       "minPrice": 430,
       "maxPrice": 1959,
       "listingCount": 100
+    },
+    {
+      "series": "BXG-21",
+      "date": "2026/07/28",
+      "googleTrendScore": 58,
+      "socialMentionCount": 10,
+      "avgPrice": 966,
+      "minPrice": 600,
+      "maxPrice": 1399,
+      "listingCount": 128
+    },
+    {
+      "series": "BXG-21",
+      "date": "2026/07/29",
+      "googleTrendScore": 55,
+      "socialMentionCount": 5,
+      "avgPrice": 963,
+      "minPrice": 600,
+      "maxPrice": 1399,
+      "listingCount": 12
     },
     {
       "series": "Beyblade Burst",
@@ -827,6 +446,26 @@
       "listingCount": 0
     },
     {
+      "series": "Beyblade Burst",
+      "date": "2026/07/28",
+      "googleTrendScore": 3,
+      "socialMentionCount": 0,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
+    },
+    {
+      "series": "Beyblade Burst",
+      "date": "2026/07/29",
+      "googleTrendScore": 3,
+      "socialMentionCount": 1,
+      "avgPrice": 500,
+      "minPrice": 200,
+      "maxPrice": 1200,
+      "listingCount": 5
+    },
+    {
       "series": "Beyblade X",
       "date": "2026/01/05",
       "googleTrendScore": 58,
@@ -929,16 +568,6 @@
     {
       "series": "Beyblade X",
       "date": "2026/06/24",
-      "googleTrendScore": 90,
-      "socialMentionCount": 60,
-      "avgPrice": 0,
-      "minPrice": 0,
-      "maxPrice": 0,
-      "listingCount": 0
-    },
-    {
-      "series": "Beyblade X",
-      "date": "2026/06/24",
       "googleTrendScore": 92,
       "socialMentionCount": 40,
       "avgPrice": 1500,
@@ -948,13 +577,13 @@
     },
     {
       "series": "Beyblade X",
-      "date": "2026/06/25",
-      "googleTrendScore": 100,
-      "socialMentionCount": 28,
-      "avgPrice": 1500,
-      "minPrice": 350,
-      "maxPrice": 5990,
-      "listingCount": 200
+      "date": "2026/06/24",
+      "googleTrendScore": 90,
+      "socialMentionCount": 60,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade X",
@@ -965,6 +594,16 @@
       "minPrice": 0,
       "maxPrice": 0,
       "listingCount": 0
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/25",
+      "googleTrendScore": 100,
+      "socialMentionCount": 28,
+      "avgPrice": 1500,
+      "minPrice": 350,
+      "maxPrice": 5990,
+      "listingCount": 200
     },
     {
       "series": "Beyblade X",
@@ -991,40 +630,60 @@
       "date": "2026/06/30",
       "googleTrendScore": 90,
       "socialMentionCount": 110,
-      "avgPrice": 0,
-      "minPrice": 0,
-      "maxPrice": 0,
-      "listingCount": 0
-    },
-    {
-      "series": "Beyblade X",
-      "date": "2026/06/30",
-      "googleTrendScore": 90,
-      "socialMentionCount": 110,
-      "avgPrice": 0,
-      "minPrice": 0,
-      "maxPrice": 0,
-      "listingCount": 0
-    },
-    {
-      "series": "Beyblade X",
-      "date": "2026/06/30",
-      "googleTrendScore": 90,
-      "socialMentionCount": 110,
-      "avgPrice": 0,
-      "minPrice": 0,
-      "maxPrice": 0,
-      "listingCount": 0
-    },
-    {
-      "series": "Beyblade X",
-      "date": "2026/06/30",
-      "googleTrendScore": 90,
-      "socialMentionCount": 110,
       "avgPrice": 800,
       "minPrice": 295,
       "maxPrice": 5230,
       "listingCount": 200
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/30",
+      "googleTrendScore": 90,
+      "socialMentionCount": 110,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/30",
+      "googleTrendScore": 90,
+      "socialMentionCount": 110,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/30",
+      "googleTrendScore": 90,
+      "socialMentionCount": 110,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/07/28",
+      "googleTrendScore": 92,
+      "socialMentionCount": 100,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/07/29",
+      "googleTrendScore": 88,
+      "socialMentionCount": 55,
+      "avgPrice": 2200,
+      "minPrice": 360,
+      "maxPrice": 6200,
+      "listingCount": 100
     },
     {
       "series": "CX-09",
@@ -1149,21 +808,21 @@
     {
       "series": "CX-09",
       "date": "2026/06/25",
-      "googleTrendScore": 55,
-      "socialMentionCount": 25,
-      "avgPrice": 766,
-      "minPrice": 469,
-      "maxPrice": 1099,
-      "listingCount": 80
-    },
-    {
-      "series": "CX-09",
-      "date": "2026/06/25",
       "googleTrendScore": 72,
       "socialMentionCount": 7,
       "avgPrice": 744,
       "minPrice": 469,
       "maxPrice": 1149,
+      "listingCount": 80
+    },
+    {
+      "series": "CX-09",
+      "date": "2026/06/25",
+      "googleTrendScore": 55,
+      "socialMentionCount": 25,
+      "avgPrice": 766,
+      "minPrice": 469,
+      "maxPrice": 1099,
       "listingCount": 80
     },
     {
@@ -1225,6 +884,26 @@
       "minPrice": 650,
       "maxPrice": 1490,
       "listingCount": 60
+    },
+    {
+      "series": "CX-09",
+      "date": "2026/07/28",
+      "googleTrendScore": 65,
+      "socialMentionCount": 12,
+      "avgPrice": 1136,
+      "minPrice": 669,
+      "maxPrice": 1494,
+      "listingCount": 55
+    },
+    {
+      "series": "CX-09",
+      "date": "2026/07/29",
+      "googleTrendScore": 62,
+      "socialMentionCount": 6,
+      "avgPrice": 1066,
+      "minPrice": 540,
+      "maxPrice": 1494,
+      "listingCount": 10
     },
     {
       "series": "CX-11",
@@ -1330,20 +1009,20 @@
       "series": "CX-11",
       "date": "2026/06/24",
       "googleTrendScore": 60,
-      "socialMentionCount": 12,
-      "avgPrice": 2395,
-      "minPrice": 945,
-      "maxPrice": 4250,
+      "socialMentionCount": 6,
+      "avgPrice": 2276,
+      "minPrice": 975,
+      "maxPrice": 5230,
       "listingCount": 285
     },
     {
       "series": "CX-11",
       "date": "2026/06/24",
       "googleTrendScore": 60,
-      "socialMentionCount": 6,
-      "avgPrice": 2276,
-      "minPrice": 975,
-      "maxPrice": 5230,
+      "socialMentionCount": 12,
+      "avgPrice": 2395,
+      "minPrice": 945,
+      "maxPrice": 4250,
       "listingCount": 285
     },
     {
@@ -1425,6 +1104,26 @@
       "minPrice": 1599,
       "maxPrice": 4290,
       "listingCount": 70
+    },
+    {
+      "series": "CX-11",
+      "date": "2026/07/28",
+      "googleTrendScore": 52,
+      "socialMentionCount": 10,
+      "avgPrice": 3211,
+      "minPrice": 950,
+      "maxPrice": 3980,
+      "listingCount": 45
+    },
+    {
+      "series": "CX-11",
+      "date": "2026/07/29",
+      "googleTrendScore": 50,
+      "socialMentionCount": 5,
+      "avgPrice": 2351,
+      "minPrice": 890,
+      "maxPrice": 3890,
+      "listingCount": 8
     },
     {
       "series": "CX-16",
@@ -1549,21 +1248,21 @@
     {
       "series": "CX-16",
       "date": "2026/06/25",
-      "googleTrendScore": 50,
-      "socialMentionCount": 15,
-      "avgPrice": 3511,
-      "minPrice": 2950,
-      "maxPrice": 3990,
-      "listingCount": 90
-    },
-    {
-      "series": "CX-16",
-      "date": "2026/06/25",
       "googleTrendScore": 70,
       "socialMentionCount": 6,
       "avgPrice": 3287,
       "minPrice": 2900,
       "maxPrice": 3980,
+      "listingCount": 90
+    },
+    {
+      "series": "CX-16",
+      "date": "2026/06/25",
+      "googleTrendScore": 50,
+      "socialMentionCount": 15,
+      "avgPrice": 3511,
+      "minPrice": 2950,
+      "maxPrice": 3990,
       "listingCount": 90
     },
     {
@@ -1627,6 +1326,26 @@
       "listingCount": 45
     },
     {
+      "series": "CX-16",
+      "date": "2026/07/28",
+      "googleTrendScore": 55,
+      "socialMentionCount": 8,
+      "avgPrice": 3126,
+      "minPrice": 1900,
+      "maxPrice": 4800,
+      "listingCount": 35
+    },
+    {
+      "series": "CX-16",
+      "date": "2026/07/29",
+      "googleTrendScore": 55,
+      "socialMentionCount": 5,
+      "avgPrice": 3248,
+      "minPrice": 1900,
+      "maxPrice": 4800,
+      "listingCount": 8
+    },
+    {
       "series": "CX-18",
       "date": "2026/06/15",
       "googleTrendScore": 90,
@@ -1660,20 +1379,20 @@
       "series": "CX-18",
       "date": "2026/06/24",
       "googleTrendScore": 95,
-      "socialMentionCount": 17,
-      "avgPrice": 1467,
-      "minPrice": 480,
-      "maxPrice": 1800,
+      "socialMentionCount": 50,
+      "avgPrice": 1500,
+      "minPrice": 950,
+      "maxPrice": 2490,
       "listingCount": 200
     },
     {
       "series": "CX-18",
       "date": "2026/06/24",
       "googleTrendScore": 95,
-      "socialMentionCount": 50,
-      "avgPrice": 1500,
-      "minPrice": 950,
-      "maxPrice": 2490,
+      "socialMentionCount": 17,
+      "avgPrice": 1467,
+      "minPrice": 480,
+      "maxPrice": 1800,
       "listingCount": 200
     },
     {
@@ -1755,6 +1474,26 @@
       "minPrice": 950,
       "maxPrice": 2490,
       "listingCount": 160
+    },
+    {
+      "series": "CX-18",
+      "date": "2026/07/28",
+      "googleTrendScore": 72,
+      "socialMentionCount": 22,
+      "avgPrice": 1492,
+      "minPrice": 1195,
+      "maxPrice": 2490,
+      "listingCount": 200
+    },
+    {
+      "series": "CX-18",
+      "date": "2026/07/29",
+      "googleTrendScore": 68,
+      "socialMentionCount": 8,
+      "avgPrice": 1407,
+      "minPrice": 949,
+      "maxPrice": 1890,
+      "listingCount": 12
     },
     {
       "series": "UX-15",
@@ -1957,6 +1696,26 @@
       "listingCount": 80
     },
     {
+      "series": "UX-15",
+      "date": "2026/07/28",
+      "googleTrendScore": 90,
+      "socialMentionCount": 28,
+      "avgPrice": 3766,
+      "minPrice": 1050,
+      "maxPrice": 5980,
+      "listingCount": 60
+    },
+    {
+      "series": "UX-15",
+      "date": "2026/07/29",
+      "googleTrendScore": 85,
+      "socialMentionCount": 10,
+      "avgPrice": 4178,
+      "minPrice": 1199,
+      "maxPrice": 4850,
+      "listingCount": 18
+    },
+    {
       "series": "UX-19",
       "date": "2026/06/30",
       "googleTrendScore": 50,
@@ -1964,6 +1723,26 @@
       "avgPrice": 1100,
       "minPrice": 780,
       "maxPrice": 1790,
+      "listingCount": 8
+    },
+    {
+      "series": "UX-19",
+      "date": "2026/07/28",
+      "googleTrendScore": 38,
+      "socialMentionCount": 6,
+      "avgPrice": 1731,
+      "minPrice": 965,
+      "maxPrice": 3044,
+      "listingCount": 25
+    },
+    {
+      "series": "UX-19",
+      "date": "2026/07/29",
+      "googleTrendScore": 35,
+      "socialMentionCount": 4,
+      "avgPrice": 1535,
+      "minPrice": 523,
+      "maxPrice": 2050,
       "listingCount": 8
     },
     {
@@ -2035,6 +1814,46 @@
       "minPrice": 670,
       "maxPrice": 3160,
       "listingCount": 35
+    },
+    {
+      "series": "UX-20",
+      "date": "2026/07/28",
+      "googleTrendScore": 92,
+      "socialMentionCount": 35,
+      "avgPrice": 2631,
+      "minPrice": 2000,
+      "maxPrice": 2999,
+      "listingCount": 38
+    },
+    {
+      "series": "UX-20",
+      "date": "2026/07/28",
+      "googleTrendScore": 92,
+      "socialMentionCount": 35,
+      "avgPrice": 2721,
+      "minPrice": 2000,
+      "maxPrice": 3980,
+      "listingCount": 38
+    },
+    {
+      "series": "UX-20",
+      "date": "2026/07/29",
+      "googleTrendScore": 88,
+      "socialMentionCount": 12,
+      "avgPrice": 2540,
+      "minPrice": 1856,
+      "maxPrice": 2999,
+      "listingCount": 22
+    },
+    {
+      "series": "UX-21",
+      "date": "2026/07/29",
+      "googleTrendScore": 65,
+      "socialMentionCount": 7,
+      "avgPrice": 5050,
+      "minPrice": 2680,
+      "maxPrice": 6200,
+      "listingCount": 10
     }
   ]
 }

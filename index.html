@@ -148,7 +148,7 @@ function render(){
   let stockValTWD=0, stockCostTWD=0;
   STOCKS.forEach(s=>{ stockValTWD+=s.shares*toTWD(s); stockCostTWD+=s.shares*costTWD(s); });
   const reVal=REAL_ESTATE.hsinchu+REAL_ESTATE.taichung;
-  const totalAssets=stockValTWD+reVal+CASH;
+  const totalAssets=Math.round(stockValTWD+reVal+CASH);
   let totalDebts=0; LOANS.forEach(l=>totalDebts+=l.amount);
   const netWorth=totalAssets-totalDebts;
 

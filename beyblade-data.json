@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-10-12T18:07:21.134+08:00",
+  "lastUpdated": "2026-10-15T18:10:32+08:00",
   "series": [
-    "Beyblade Burst",
-    "Beyblade X",
     "BX-49",
     "BXG-21",
+    "Beyblade Burst",
+    "Beyblade X",
     "CX-09",
     "CX-11",
     "CX-16",
@@ -107,6 +107,12 @@
     },
     {
       "series": "Beyblade Burst",
+      "date": "2026/06/23",
+      "googleTrendScore": 10,
+      "socialMentionCount": 5
+    },
+    {
+      "series": "Beyblade Burst",
       "date": "2026/06/24",
       "googleTrendScore": 5,
       "socialMentionCount": 1,
@@ -114,6 +120,12 @@
       "minPrice": 100,
       "maxPrice": 500,
       "listingCount": 5
+    },
+    {
+      "series": "Beyblade Burst",
+      "date": "2026/06/24",
+      "googleTrendScore": 8,
+      "socialMentionCount": 2
     },
     {
       "series": "Beyblade Burst",
@@ -174,6 +186,24 @@
       "minPrice": 0,
       "maxPrice": 0,
       "listingCount": 0
+    },
+    {
+      "series": "Beyblade Burst",
+      "date": "2026/06/30",
+      "googleTrendScore": 5,
+      "socialMentionCount": 0
+    },
+    {
+      "series": "Beyblade Burst",
+      "date": "2026/06/30",
+      "googleTrendScore": 5,
+      "socialMentionCount": 0
+    },
+    {
+      "series": "Beyblade Burst",
+      "date": "2026/07/28",
+      "googleTrendScore": 3,
+      "socialMentionCount": 0
     },
     {
       "series": "Beyblade Burst",
@@ -277,6 +307,18 @@
     },
     {
       "series": "Beyblade X",
+      "date": "2026/06/23",
+      "googleTrendScore": 70,
+      "socialMentionCount": 50
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/24",
+      "googleTrendScore": 90,
+      "socialMentionCount": 60
+    },
+    {
+      "series": "Beyblade X",
       "date": "2026/06/24",
       "googleTrendScore": 92,
       "socialMentionCount": 40,
@@ -344,6 +386,24 @@
       "minPrice": 295,
       "maxPrice": 5230,
       "listingCount": 200
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/30",
+      "googleTrendScore": 90,
+      "socialMentionCount": 110
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/06/30",
+      "googleTrendScore": 90,
+      "socialMentionCount": 110
+    },
+    {
+      "series": "Beyblade X",
+      "date": "2026/07/28",
+      "googleTrendScore": 92,
+      "socialMentionCount": 100
     },
     {
       "series": "Beyblade X",

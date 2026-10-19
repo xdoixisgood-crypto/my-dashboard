@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-10-15T18:10:32+08:00",
+  "lastUpdated": "2026-10-19T18:11:40+08:00",
   "series": [
-    "BX-49",
-    "BXG-21",
     "Beyblade Burst",
     "Beyblade X",
+    "BX-49",
+    "BXG-21",
     "CX-09",
     "CX-11",
     "CX-16",
@@ -109,7 +109,11 @@
       "series": "Beyblade Burst",
       "date": "2026/06/23",
       "googleTrendScore": 10,
-      "socialMentionCount": 5
+      "socialMentionCount": 5,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade Burst",
@@ -125,7 +129,11 @@
       "series": "Beyblade Burst",
       "date": "2026/06/24",
       "googleTrendScore": 8,
-      "socialMentionCount": 2
+      "socialMentionCount": 2,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade Burst",
@@ -191,19 +199,31 @@
       "series": "Beyblade Burst",
       "date": "2026/06/30",
       "googleTrendScore": 5,
-      "socialMentionCount": 0
+      "socialMentionCount": 0,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade Burst",
       "date": "2026/06/30",
       "googleTrendScore": 5,
-      "socialMentionCount": 0
+      "socialMentionCount": 0,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade Burst",
       "date": "2026/07/28",
       "googleTrendScore": 3,
-      "socialMentionCount": 0
+      "socialMentionCount": 0,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade Burst",
@@ -309,13 +329,21 @@
       "series": "Beyblade X",
       "date": "2026/06/23",
       "googleTrendScore": 70,
-      "socialMentionCount": 50
+      "socialMentionCount": 50,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade X",
       "date": "2026/06/24",
       "googleTrendScore": 90,
-      "socialMentionCount": 60
+      "socialMentionCount": 60,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade X",
@@ -391,19 +419,31 @@
       "series": "Beyblade X",
       "date": "2026/06/30",
       "googleTrendScore": 90,
-      "socialMentionCount": 110
+      "socialMentionCount": 110,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade X",
       "date": "2026/06/30",
       "googleTrendScore": 90,
-      "socialMentionCount": 110
+      "socialMentionCount": 110,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade X",
       "date": "2026/07/28",
       "googleTrendScore": 92,
-      "socialMentionCount": 100
+      "socialMentionCount": 100,
+      "avgPrice": 0,
+      "minPrice": 0,
+      "maxPrice": 0,
+      "listingCount": 0
     },
     {
       "series": "Beyblade X",
